@@ -184,6 +184,14 @@ export const formsMessages = {
       proofLabel: "পেমেন্ট স্ক্রিনশট আপলোড (আবশ্যক)",
       proofHint:
         "স্ক্রিনশটে পরিমাণ, তারিখ ও ট্রানজেকশন ID স্পষ্ট দেখাতে হবে। JPG/PNG, সর্বোচ্চ ৫MB।",
+      monthlyTitle: "ঐচ্ছিক: চলতি মাসের টিউশন অগ্রিম পরিশোধ",
+      monthlyIntro:
+        "ভর্তি ফি একবারই দিতে হয়। চলতি মাসের মাসিক টিউশনও এখন দিতে চাইলে নিচের অপশনটি সিলেক্ট করুন। সেই মাসিক পেমেন্ট স্টুডেন্ট পোর্টাল ও অ্যাডমিন পেমেন্টসে দেখা যাবে।",
+      monthlyCheckbox:
+        "ভর্তি ফির সাথে চলতি মাসের টিউশনও অগ্রিম পরিশোধ করতে চাই",
+      monthlyAmount: "চলতি মাসের পরিশোধিত টিউশন",
+      monthlyHint:
+        "ভর্তি ফি ও চলতি মাসের টিউশন একসাথে পাঠিয়ে থাকলে একই স্ক্রিনশটই যথেষ্ট। প্রয়োজনে পরিমাণ এডিট করতে পারবেন।",
       instructions: {
         title: "পেমেন্ট নির্দেশনা",
         sendTo: "{method} — {account} নম্বরে পেমেন্ট পাঠান",
@@ -223,6 +231,8 @@ export const formsMessages = {
       admissionReference: "ট্রানজেকশন রেফারেন্স",
       admissionPaymentDate: "পেমেন্টের তারিখ",
       admissionProof: "পেমেন্ট প্রমাণ",
+      monthlyTuition: "চলতি মাসের টিউশন (অগ্রিম)",
+      monthlyTuitionNo: "এখন চলতি মাস দিচ্ছি না",
       parentName: "অভিভাবকের নাম",
       parentRelationship: "সম্পর্ক",
       parentWhatsapp: "অভিভাবকের WhatsApp",
@@ -332,6 +342,8 @@ export const formsMessages = {
     admissionPaymentRequired: "ভর্তি ফি কীভাবে পরিশোধ করেছেন নির্বাচন করুন",
     admissionReferenceRequired: "ট্রানজেকশন / রেফারেন্স নম্বর প্রয়োজন",
     admissionDateRequired: "পেমেন্টের তারিখ প্রয়োজন",
+    monthlyTuitionRequired: "চলতি মাসের টিউশনের পরিমাণ লিখুন",
+    monthlyTuitionInvalid: "সঠিক টিউশন পরিমাণ লিখুন",
     parentNameRequired: "অভিভাবকের নাম প্রয়োজন",
     studentNameRequired: "শিক্ষার্থীর নাম প্রয়োজন",
     trialDateRequired: "ট্রায়াল তারিখ নির্বাচন করুন",

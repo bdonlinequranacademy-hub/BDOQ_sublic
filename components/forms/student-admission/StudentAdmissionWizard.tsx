@@ -79,6 +79,8 @@ export function StudentAdmissionWizard() {
       timezone: DEFAULT_TIMEZONE,
       admissionFeeCurrency: "bdt",
       admissionFeeAmount: String(ADMISSION_FEE.bdt),
+      payCurrentMonthTuition: false,
+      monthlyTuitionAmount: "",
       termsAccepted: false,
     },
     mode: "onTouched",
@@ -110,6 +112,7 @@ export function StudentAdmissionWizard() {
           ? prefill.referralSources
           : [],
         termsAccepted: false,
+        payCurrentMonthTuition: Boolean(prefill.payCurrentMonthTuition),
       });
       setPrefillToken(result.prefillToken);
       setPrefillLoaded(true);

@@ -128,12 +128,17 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     admissionPaymentSender: z.string().optional(),
     admissionPaymentNote: z.string().optional(),
     admissionPaymentProofFile: proofSchema,
+    payCurrentMonthTuition: z.boolean(),
+    monthlyTuitionAmount: z.string().optional(),
   });
 
   const applyAdmissionFeeRefinement = (
     data: Pick<
       z.infer<typeof step5Base>,
-      "admissionFeeAmount" | "admissionFeeCurrency"
+      | "admissionFeeAmount"
+      | "admissionFeeCurrency"
+      | "payCurrentMonthTuition"
+      | "monthlyTuitionAmount"
     >,
     ctx: z.RefinementCtx
   ): void => {
@@ -155,6 +160,17 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
         message: v("admissionAmountTooLow"),
         path: ["admissionFeeAmount"],
       });
+    }
+
+    if (data.payCurrentMonthTuition) {
+      const monthly = Number(data.monthlyTuitionAmount);
+      if (!Number.isFinite(monthly) || monthly <= 0) {
+        ctx.addIssue({
+          code: "custom",
+          message: v("monthlyTuitionInvalid"),
+          path: ["monthlyTuitionAmount"],
+        });
+      }
     }
   };
 
@@ -281,6 +297,8 @@ export const STUDENT_ADMISSION_STEPS = [
       "admissionPaymentReference",
       "admissionPaymentDate",
       "admissionPaymentProofFile",
+      "payCurrentMonthTuition",
+      "monthlyTuitionAmount",
     ],
   },
   {

@@ -184,6 +184,14 @@ export const formsMessages = {
       proofLabel: "Upload payment screenshot (required)",
       proofHint:
         "Screenshot must clearly show amount, date, and transaction ID. JPG or PNG, max 5MB.",
+      monthlyTitle: "Optional: pay this month’s tuition in advance",
+      monthlyIntro:
+        "Admission fee is one-time. If you also want to pay the running month’s tuition now, tick the box below. That monthly payment will appear in the student portal and admin payments.",
+      monthlyCheckbox:
+        "I also want to pay this month’s tuition in advance (along with the admission fee)",
+      monthlyAmount: "This month’s tuition paid",
+      monthlyHint:
+        "Use the same screenshot if you sent admission fee + this month’s tuition together. You can edit the amount if needed.",
       instructions: {
         title: "Payment instructions",
         sendTo: "Send payment via {method} to {account}",
@@ -223,6 +231,8 @@ export const formsMessages = {
       admissionReference: "Transaction reference",
       admissionPaymentDate: "Payment date",
       admissionProof: "Payment proof",
+      monthlyTuition: "This month’s tuition (advance)",
+      monthlyTuitionNo: "Not paying this month now",
       parentName: "Guardian name",
       parentRelationship: "Relationship",
       parentWhatsapp: "Guardian WhatsApp",
@@ -330,6 +340,8 @@ export const formsMessages = {
     admissionPaymentRequired: "Select how you paid the admission fee",
     admissionReferenceRequired: "Transaction / reference number is required",
     admissionDateRequired: "Payment date is required",
+    monthlyTuitionRequired: "Enter this month’s tuition amount",
+    monthlyTuitionInvalid: "Enter a valid tuition amount",
     parentNameRequired: "Guardian name is required",
     studentNameRequired: "Student name is required",
     trialDateRequired: "Please select a trial date",
