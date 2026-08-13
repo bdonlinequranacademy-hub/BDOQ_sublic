@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { BilingualLabel } from "@/components/forms/shared/BilingualLabel";
 import { AddressFields } from "@/components/forms/shared/AddressFields";
+import { PasswordInput } from "@/components/forms/shared/PasswordInput";
 import { PhoneInput } from "@/components/forms/shared/PhoneInput";
 import { FormSelect } from "@/components/forms/shared/FormSelect";
 import {
@@ -192,11 +193,9 @@ export function TeacherStepPersonal() {
             labelEn="Password"
             required
           />
-          <input
+          <PasswordInput
             id="password"
-            type="password"
             autoComplete="new-password"
-            className={formInputClass}
             {...register("password")}
           />
           <p className="mt-1 font-body text-xs text-text-gray">
@@ -214,11 +213,9 @@ export function TeacherStepPersonal() {
             labelEn="Confirm password"
             required
           />
-          <input
+          <PasswordInput
             id="confirmPassword"
-            type="password"
             autoComplete="new-password"
-            className={formInputClass}
             {...register("confirmPassword")}
           />
           {errors.confirmPassword && (

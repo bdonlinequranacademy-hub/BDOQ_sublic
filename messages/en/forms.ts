@@ -14,6 +14,8 @@ export const formsMessages = {
     am: "AM",
     pm: "PM",
     emptyValue: "—",
+    showPassword: "Show password",
+    hidePassword: "Hide password",
   },
   layout: {
     bismillah: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ",
