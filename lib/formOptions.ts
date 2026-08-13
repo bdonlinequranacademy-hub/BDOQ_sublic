@@ -75,7 +75,6 @@ export const PAYMENT_OPTIONS = [
   { value: "bkash", label: "bKash" },
   { value: "nagad", label: "Nagad" },
   { value: "bank", label: "Bank transfer" },
-  { value: "paypal", label: "PayPal / International" },
   { value: "cash", label: "Cash (Bangladesh)" },
 ];
 

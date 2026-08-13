@@ -25,7 +25,6 @@ export function createOptionalPaymentSchema(v: FormValidationFn) {
         message: v("optionalPaymentMethodRequired"),
       }),
       payerName: z.string().min(2, v("contactNameRequired")),
-      email: z.string().optional(),
       whatsapp: z.string().optional(),
       reference: z.string().min(3, v("optionalPaymentReferenceRequired")),
       paymentDate: z.string().min(1, v("optionalPaymentDateRequired")),
@@ -38,22 +37,6 @@ export function createOptionalPaymentSchema(v: FormValidationFn) {
           code: z.ZodIssueCode.custom,
           path: ["customLabel"],
           message: v("optionalPaymentCustomLabelRequired"),
-        });
-      }
-
-      const email = (data.email ?? "").trim();
-      const whatsapp = (data.whatsapp ?? "").trim();
-      if (!email && !whatsapp) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["email"],
-          message: v("optionalPaymentContactRequired"),
-        });
-      } else if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["email"],
-          message: v("emailInvalid"),
         });
       }
 

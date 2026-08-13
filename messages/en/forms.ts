@@ -171,7 +171,7 @@ export const formsMessages = {
     },
     admissionFee: {
       intro:
-        "Pay the one-time admission fee manually using bKash, Nagad, bank transfer, PayPal, or cash. Upload your payment screenshot so our team can verify your application.",
+        "Pay the one-time admission fee manually using bKash, Nagad, bank transfer, or cash. Upload your payment screenshot so our team can verify your application.",
       expectedFee: "Expected admission fee",
       manualNote:
         "No online payment gateway — send the fee to our account, then submit the transaction details below.",
@@ -401,7 +401,6 @@ export const formsMessages = {
     optionalPaymentDateRequired: "Payment date is required",
     optionalPaymentCustomLabelRequired: "Describe this custom payment",
     optionalPaymentScreenshotRequired: "Upload your payment screenshot",
-    optionalPaymentContactRequired: "Provide an email or WhatsApp number",
   },
   teacherRules: {
     rule1:

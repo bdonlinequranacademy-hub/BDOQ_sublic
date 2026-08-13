@@ -9,7 +9,7 @@ import {
 } from "@/lib/formOptions";
 
 type PackageKey = "basic" | "standard" | "advance" | "premium";
-type PaymentKey = "bkash" | "nagad" | "bank" | "paypal" | "cash";
+type PaymentKey = "bkash" | "nagad" | "bank" | "cash";
 type NationalityKey = (typeof NATIONALITY_OPTIONS)[number];
 
 export function useNationalitySelectOptions(): {

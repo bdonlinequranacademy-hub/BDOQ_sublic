@@ -785,10 +785,6 @@ export const ADMISSION_PAYMENT_ACCOUNTS = {
     accountName: "BD Online Quran Academy",
     note: "Contact us on WhatsApp for bank account details before transfer.",
   },
-  paypal: {
-    label: "PayPal",
-    email: "bdonlinequranacademy@gmail.com",
-  },
   cash: {
     label: "Cash",
     note: "Pay in person or via a local representative — confirm with our team first.",

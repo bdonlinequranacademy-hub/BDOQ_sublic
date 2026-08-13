@@ -70,7 +70,6 @@ export function OptionalPaymentForm() {
       currency: "bdt",
       method: "bkash",
       payerName: "",
-      email: "",
       whatsapp: "",
       reference: "",
       paymentDate: "",
@@ -121,7 +120,6 @@ export function OptionalPaymentForm() {
       formData.append("currency", data.currency === "usd" ? "USD" : "BDT");
       formData.append("method", data.method);
       formData.append("payerName", data.payerName);
-      if (data.email) formData.append("email", data.email);
       if (data.whatsapp) formData.append("whatsapp", data.whatsapp);
       formData.append("reference", data.reference);
       formData.append("paymentDate", data.paymentDate);
@@ -143,7 +141,6 @@ export function OptionalPaymentForm() {
         currency: data.currency,
         method: data.method,
         payerName: "",
-        email: "",
         whatsapp: "",
         reference: "",
         paymentDate: "",
@@ -236,22 +233,6 @@ export function OptionalPaymentForm() {
           />
           {errors.payerName ? (
             <p className={formErrorClass}>{errors.payerName.message}</p>
-          ) : null}
-        </div>
-
-        <div>
-          <label htmlFor="optional-email" className={formLabelClass}>
-            {t("email")}
-          </label>
-          <input
-            id="optional-email"
-            type="email"
-            className={formInputClass}
-            placeholder="you@example.com"
-            {...register("email")}
-          />
-          {errors.email ? (
-            <p className={formErrorClass}>{errors.email.message}</p>
           ) : null}
         </div>
 

@@ -171,7 +171,7 @@ export const formsMessages = {
     },
     admissionFee: {
       intro:
-        "bKash, Nagad, ব্যাংক, PayPal বা ক্যাশের মাধ্যমে এককালীন ভর্তি ফি ম্যানুয়ালি পরিশোধ করুন। যাচাইয়ের জন্য পেমেন্ট স্ক্রিনশট আপলোড করুন।",
+        "bKash, Nagad, ব্যাংক বা ক্যাশের মাধ্যমে এককালীন ভর্তি ফি ম্যানুয়ালি পরিশোধ করুন। যাচাইয়ের জন্য পেমেন্ট স্ক্রিনশট আপলোড করুন।",
       expectedFee: "প্রয়োজনীয় ভর্তি ফি",
       manualNote:
         "অনলাইন পেমেন্ট গেটওয়ে নেই — আমাদের অ্যাকাউন্টে ফি পাঠিয়ে নিচে লেনদেনের তথ্য জমা দিন।",
@@ -403,7 +403,6 @@ export const formsMessages = {
     optionalPaymentDateRequired: "পেমেন্টের তারিখ প্রয়োজন",
     optionalPaymentCustomLabelRequired: "এই কাস্টম পেমেন্টের বিবরণ লিখুন",
     optionalPaymentScreenshotRequired: "পেমেন্ট স্ক্রিনশট আপলোড করুন",
-    optionalPaymentContactRequired: "ইমেইল অথবা WhatsApp নম্বর দিন",
   },
   teacherRules: {
     rule1:

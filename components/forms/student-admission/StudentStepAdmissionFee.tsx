@@ -66,14 +66,6 @@ export function StudentStepAdmissionFee() {
           ADMISSION_PAYMENT_ACCOUNTS.bank.note,
           t("instructions.amount", { amount: amountLabel }),
         ];
-      case "paypal":
-        return [
-          t("instructions.sendTo", {
-            method: ADMISSION_PAYMENT_ACCOUNTS.paypal.label,
-            account: ADMISSION_PAYMENT_ACCOUNTS.paypal.email,
-          }),
-          t("instructions.amount", { amount: amountLabel }),
-        ];
       case "cash":
         return [
           ADMISSION_PAYMENT_ACCOUNTS.cash.note,
