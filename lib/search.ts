@@ -72,6 +72,14 @@ const SITE_PAGES: ISearchResult[] = [
     category: "page",
   },
   {
+    id: "page-payments",
+    title: "Payments & Gifts",
+    description:
+      "Admission fee, monthly tuition, teacher gift, Eid salami, sponsorship, sadaqah, and custom payments",
+    href: "/payments",
+    category: "page",
+  },
+  {
     id: "page-teachers",
     title: "Teachers and Mentors",
     description: "Meet our male and female Quran instructors",

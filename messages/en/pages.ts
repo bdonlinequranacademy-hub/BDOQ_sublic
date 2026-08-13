@@ -203,6 +203,99 @@ export const pagesMessages = {
       "Join hundreds of students worldwide learning with qualified Hafiz teachers — one-to-one, flexible, and effective.",
     bookTrial: "Book a free trial class",
   },
+  payments: {
+    eyebrow: "Optional payments",
+    title: "Payments & Gifts",
+    subtitle:
+      "Pay admission or monthly tuition through the existing academy flow, or send an optional gift, sadaqah, or custom payment. Nothing here is required unless you choose it.",
+    optionalNote:
+      "Gifts, Eid salami, sponsorship, and sadaqah are completely optional. JazakAllahu khairan for supporting BDOQ Academy.",
+    categoriesTitle: "Choose a category",
+    categoriesSubtitle:
+      "Admission fee and monthly tuition use the current student processes. The other options go to this page’s optional payment form.",
+    methodsTitle: "Accepted methods",
+    methodsSubtitle:
+      "Send money to the academy wallet, then upload your screenshot so admin can verify who paid.",
+    formTitle: "Submit optional payment proof",
+    formHint:
+      "After you pay by bKash, Nagad, Rocket, or bank transfer, fill this form. Admin will review the screenshot.",
+    payerName: "Full name",
+    payerNamePlaceholder: "Your full name",
+    email: "Email",
+    whatsapp: "WhatsApp",
+    whatsappPlaceholder: "+880 1XXX-XXXXXX",
+    category: "Category",
+    customLabel: "Custom payment title",
+    customLabelPlaceholder: "e.g. Teacher gift for Ramadan",
+    amount: "Amount paid",
+    currency: "Currency",
+    method: "Payment method",
+    reference: "Transaction / reference no.",
+    referencePlaceholder: "TrxID or bank reference",
+    paymentDate: "Payment date",
+    note: "Note (optional)",
+    notePlaceholder: "Who is this for, or any message for the academy",
+    screenshot: "Payment screenshot",
+    submit: "Submit payment proof",
+    success:
+      "JazakAllahu khairan — your proof was received. Our team will review it shortly.",
+    error: "Could not submit. Please try again or contact us on WhatsApp.",
+    goToForm: "Continue to form",
+    goToAdmission: "Open admission form",
+    goToMonthly: "Open student portal payments",
+    monthlyHint:
+      "Monthly Quran tuition is paid from the student portal after login. Admission fee is paid on the student admission form.",
+    cards: {
+      admission_fee: {
+        title: "Admission Fee",
+        description:
+          "One-time enrollment fee. Use the existing student admission form — do not pay it here.",
+      },
+      monthly_tuition: {
+        title: "Monthly Quran Learning Tuition",
+        description:
+          "Recurring class fee. Log in to the student portal Payments page to submit monthly tuition.",
+      },
+      teacher_bakhshish: {
+        title: "Teacher Bakhshish / Gift",
+        description:
+          "An optional gift of appreciation for your Quran teacher.",
+      },
+      eid_gift: {
+        title: "Eid Gift / Salami / Bonus",
+        description:
+          "Optional Eid salami or bonus for teachers or the academy.",
+      },
+      sponsor_student: {
+        title: "Sponsor a Student",
+        description:
+          "Help a student continue Quran learning when they cannot cover fees.",
+      },
+      sadaqah: {
+        title: "Sadaqah / Donation",
+        description:
+          "A voluntary donation to support BDOQ Academy’s Quran education work.",
+      },
+      custom: {
+        title: "Custom Payment",
+        description:
+          "Any other optional payment — describe the purpose in the form.",
+      },
+    },
+    methods: {
+      bkash: "bKash",
+      nagad: "Nagad",
+      rocket: "Rocket",
+      bank: "Bank Transfer",
+    },
+    instructions: {
+      sendTo: "Send money to {method}: {account}",
+      bankIntro: "Bank transfer in the name of {name}.",
+      referenceHint: "Keep the TrxID / reference to paste in the form.",
+    },
+    currencyBdt: "BDT (৳)",
+    currencyUsd: "USD ($)",
+  },
   about: {
     videoEyebrow: "Academy Introduction",
     videoTitle: "You are welcome. {name}",

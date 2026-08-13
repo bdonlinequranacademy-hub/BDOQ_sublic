@@ -395,6 +395,15 @@ export const formsMessages = {
     contactEmailRequired: "বৈধ ইমেইল প্রয়োজন",
     contactSubjectRequired: "বিষয় প্রয়োজন",
     contactMessageRequired: "বার্তা কমপক্ষে ১০ অক্ষরের হতে হবে",
+    optionalPaymentCategoryRequired: "পেমেন্ট ক্যাটাগরি নির্বাচন করুন",
+    optionalPaymentAmountRequired: "পরিশোধিত পরিমাণ লিখুন",
+    optionalPaymentAmountInvalid: "সঠিক পরিমাণ লিখুন",
+    optionalPaymentMethodRequired: "কীভাবে পরিশোধ করেছেন নির্বাচন করুন",
+    optionalPaymentReferenceRequired: "ট্রানজেকশন / রেফারেন্স নম্বর প্রয়োজন",
+    optionalPaymentDateRequired: "পেমেন্টের তারিখ প্রয়োজন",
+    optionalPaymentCustomLabelRequired: "এই কাস্টম পেমেন্টের বিবরণ লিখুন",
+    optionalPaymentScreenshotRequired: "পেমেন্ট স্ক্রিনশট আপলোড করুন",
+    optionalPaymentContactRequired: "ইমেইল অথবা WhatsApp নম্বর দিন",
   },
   teacherRules: {
     rule1:

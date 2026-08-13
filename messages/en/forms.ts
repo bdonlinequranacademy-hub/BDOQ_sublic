@@ -393,6 +393,15 @@ export const formsMessages = {
     contactEmailRequired: "Valid email is required",
     contactSubjectRequired: "Subject is required",
     contactMessageRequired: "Message must be at least 10 characters",
+    optionalPaymentCategoryRequired: "Please select a payment category",
+    optionalPaymentAmountRequired: "Enter the amount you paid",
+    optionalPaymentAmountInvalid: "Enter a valid amount",
+    optionalPaymentMethodRequired: "Select how you paid",
+    optionalPaymentReferenceRequired: "Transaction / reference number is required",
+    optionalPaymentDateRequired: "Payment date is required",
+    optionalPaymentCustomLabelRequired: "Describe this custom payment",
+    optionalPaymentScreenshotRequired: "Upload your payment screenshot",
+    optionalPaymentContactRequired: "Provide an email or WhatsApp number",
   },
   teacherRules: {
     rule1:

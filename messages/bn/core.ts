@@ -38,6 +38,7 @@ export const coreMessages = {
     studentAdmission: "শিক্ষার্থী ভর্তি",
     teacherRegistration: "শিক্ষক নিবন্ধন",
     contact: "যোগাযোগ",
+    payments: "পেমেন্ট ও উপহার",
     more: "আরও",
     login: "লগইন",
     aboutUsFooter: "আমাদের সম্পর্কে",

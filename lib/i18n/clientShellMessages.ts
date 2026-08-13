@@ -88,6 +88,23 @@ export function getFormClientMessages(
   };
 }
 
+export function getPaymentsClientMessages(messages: MessageTree): MessageTree {
+  const forms = messages.forms as MessageTree | undefined;
+  return {
+    ...pickKeys(messages, ["cta"]),
+    pages: pickNestedPages(messages, ["payments"]),
+    ...(forms?.common || forms?.fileDropzone || forms?.validation
+      ? {
+          forms: {
+            ...(forms.common ? { common: forms.common } : {}),
+            ...(forms.fileDropzone ? { fileDropzone: forms.fileDropzone } : {}),
+            ...(forms.validation ? { validation: forms.validation } : {}),
+          },
+        }
+      : {}),
+  };
+}
+
 export function getContactClientMessages(messages: MessageTree): MessageTree {
   const forms = messages.forms as MessageTree | undefined;
   return {

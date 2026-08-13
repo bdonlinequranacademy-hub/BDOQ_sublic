@@ -46,6 +46,7 @@ export const MAIN_NAV: INavItem[] = [
       { labelKey: "teacherRegistration", href: "/teacher-registration" },
     ],
   },
+  { labelKey: "payments", href: "/payments" },
   { labelKey: "contact", href: "/contact" },
 ];
 
@@ -91,12 +92,14 @@ export const MAIN_NAV_OVERFLOW: INavItem[] = [
       { labelKey: "teacherRegistration", href: "/teacher-registration" },
     ],
   },
+  { labelKey: "payments", href: "/payments" },
   { labelKey: "contact", href: "/contact" },
 ];
 
 export const FOOTER_OTHER_LINKS: INavLink[] = [
   { labelKey: "aboutUsFooter", href: "/about" },
   { labelKey: "blog", href: "/blog" },
+  { labelKey: "payments", href: "/payments" },
   { labelKey: "privacyPolicy", href: "/privacy-policy" },
   { labelKey: "termsOfUse", href: "/terms-of-use" },
   { labelKey: "teacherRegFooter", href: "/teacher-registration" },

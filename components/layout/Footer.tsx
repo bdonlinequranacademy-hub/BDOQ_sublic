@@ -47,6 +47,7 @@ export async function Footer() {
         { href: "/free-class", label: tCta("freeTrialClass") },
         { href: "/teachers", label: tNav("teachers") },
         { href: "/pricing", label: tNav("pricing") },
+        { href: "/payments", label: tNav("payments") },
         { href: "/contact", label: tNav("contact") },
       ],
     },

@@ -38,6 +38,7 @@ export const coreMessages = {
     studentAdmission: "Student Admission",
     teacherRegistration: "Teacher Registration",
     contact: "Contact",
+    payments: "Payments & Gifts",
     more: "More",
     login: "Login",
     aboutUsFooter: "About us",
