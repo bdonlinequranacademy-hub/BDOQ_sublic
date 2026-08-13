@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Clock, RefreshCw } from "lucide-react";
 import { PRAYER_TIMES_API } from "@/lib/constants";
+import { formatTwentyFourHourToAmPm } from "@/lib/formatTime";
 
 interface IPrayerTimings {
   Fajr: string;
@@ -104,7 +105,7 @@ export function PrayerTimeWidget() {
             >
               <span className="text-text-gray">{label}</span>
               <span className="font-medium text-primary-dark">
-                {timings[key]}
+                {formatTwentyFourHourToAmPm(timings[key])}
               </span>
             </li>
           ))}
