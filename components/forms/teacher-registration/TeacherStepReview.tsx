@@ -69,7 +69,6 @@ export function TeacherStepReview() {
           )
           .join(", "),
       },
-      { label: t("review.salary"), value: values.expectedSalary ?? "" },
       {
         label: t("review.devices"),
         value: (values.teachingDevices ?? [])

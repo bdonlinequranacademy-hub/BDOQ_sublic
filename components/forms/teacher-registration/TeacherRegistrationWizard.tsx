@@ -65,6 +65,7 @@ export function TeacherRegistrationWizard() {
       languages: [],
       teachingDevices: [],
       isHafiz: "no",
+      educationYear: "",
       rulesAccepted: false,
     },
     mode: "onTouched",

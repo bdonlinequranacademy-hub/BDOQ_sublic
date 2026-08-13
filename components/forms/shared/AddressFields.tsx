@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import {
   formErrorClass,
+  formHintClass,
   formInputClass,
   formSelectChevronClass,
   formSelectClass,
@@ -23,6 +24,7 @@ import {
   getPostalCodesForCity,
   getStatesForCountry,
 } from "@/lib/location/addressLocations";
+import { cn } from "@/lib/cn";
 
 interface IAddressFieldsProps<T extends Record<string, unknown>> {
   prefix: string;
@@ -30,6 +32,7 @@ interface IAddressFieldsProps<T extends Record<string, unknown>> {
   errors: FieldErrors<T>;
   titleBn?: string;
   titleEn?: string;
+  disabled?: boolean;
 }
 
 function fieldName(prefix: string, key: string): string {
@@ -74,9 +77,63 @@ function LocationSelect({
               {option}
             </option>
           ))}
+          {value && !options.includes(value) ? (
+            <option value={value}>{value}</option>
+          ) : null}
         </select>
         <ChevronDown className={formSelectChevronClass} aria-hidden="true" />
       </div>
+      {error && <p className={formErrorClass}>{error}</p>}
+    </div>
+  );
+}
+
+function PostalCodeField({
+  id,
+  label,
+  placeholder,
+  hint,
+  value,
+  onChange,
+  options,
+  error,
+  disabled = false,
+}: {
+  id: string;
+  label: string;
+  placeholder: string;
+  hint: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: string[];
+  error?: string;
+  disabled?: boolean;
+}) {
+  const listId = `${id}-suggestions`;
+
+  return (
+    <div>
+      <label htmlFor={id} className="mb-1.5 block font-body text-sm text-text-gray">
+        {label}
+      </label>
+      <input
+        id={id}
+        list={options.length > 0 ? listId : undefined}
+        value={value}
+        disabled={disabled}
+        placeholder={placeholder}
+        onChange={(event) => onChange(event.target.value)}
+        className={formInputClass}
+        autoComplete="postal-code"
+      />
+      {options.length > 0 ? (
+        <datalist id={listId}>
+          {options.map((option) => (
+            <option key={option} value={option} />
+          ))}
+        </datalist>
+      ) : null}
+      <p className={formHintClass}>{hint}</p>
       {error && <p className={formErrorClass}>{error}</p>}
     </div>
   );
@@ -88,6 +145,7 @@ export function AddressFields<T extends Record<string, unknown>>({
   errors,
   titleBn,
   titleEn,
+  disabled = false,
 }: IAddressFieldsProps<T>) {
   const t = useTranslations("forms.address");
   const locale = useFormLocale();
@@ -148,55 +206,45 @@ export function AddressFields<T extends Record<string, unknown>>({
     [countryValue, stateValue, districtValue, cityValue]
   );
 
-  const prevCountryRef = useRef<string | undefined>();
-  const prevStateRef = useRef<string | undefined>();
-  const prevDistrictRef = useRef<string | undefined>();
-  const prevCityRef = useRef<string | undefined>();
+  const setField = (name: string, value: string): void => {
+    setValue(name as never, value as never, { shouldValidate: true, shouldDirty: true });
+  };
 
-  useEffect(() => {
-    if (
-      prevCountryRef.current !== undefined &&
-      prevCountryRef.current !== countryValue
-    ) {
-      setValue(stateField as never, "" as never, { shouldDirty: true });
-      setValue(district as never, "" as never, { shouldDirty: true });
-      setValue(city as never, "" as never, { shouldDirty: true });
-      setValue(postalCode as never, "" as never, { shouldDirty: true });
+  const handleCountryChange = (value: string): void => {
+    setField(country, value);
+    setField(stateField, "");
+    setField(district, "");
+    setField(city, "");
+    setField(postalCode, "");
+  };
+
+  const handleStateChange = (value: string): void => {
+    setField(stateField, value);
+    setField(district, "");
+    setField(city, "");
+    setField(postalCode, "");
+  };
+
+  const handleDistrictChange = (value: string): void => {
+    setField(district, value);
+    setField(city, "");
+    setField(postalCode, "");
+  };
+
+  const handleCityChange = (value: string): void => {
+    setField(city, value);
+    const codes = getPostalCodesForCity(
+      countryValue ?? "",
+      stateValue ?? "",
+      districtValue ?? "",
+      value
+    );
+    if (codes.length === 1) {
+      setField(postalCode, codes[0]);
+      return;
     }
-    prevCountryRef.current = countryValue;
-  }, [countryValue, setValue, stateField, district, city, postalCode]);
-
-  useEffect(() => {
-    if (prevStateRef.current !== undefined && prevStateRef.current !== stateValue) {
-      setValue(district as never, "" as never, { shouldDirty: true });
-      setValue(city as never, "" as never, { shouldDirty: true });
-      setValue(postalCode as never, "" as never, { shouldDirty: true });
-    }
-    prevStateRef.current = stateValue;
-  }, [stateValue, setValue, district, city, postalCode]);
-
-  useEffect(() => {
-    if (
-      prevDistrictRef.current !== undefined &&
-      prevDistrictRef.current !== districtValue
-    ) {
-      setValue(city as never, "" as never, { shouldDirty: true });
-      setValue(postalCode as never, "" as never, { shouldDirty: true });
-    }
-    prevDistrictRef.current = districtValue;
-  }, [districtValue, setValue, city, postalCode]);
-
-  useEffect(() => {
-    if (prevCityRef.current !== undefined && prevCityRef.current !== cityValue) {
-      setValue(postalCode as never, "" as never, { shouldDirty: true });
-    }
-    prevCityRef.current = cityValue;
-  }, [cityValue, setValue, postalCode]);
-
-  useEffect(() => {
-    if (!cityValue || !profile || postalOptions.length !== 1) return;
-    setValue(postalCode as never, postalOptions[0] as never, { shouldDirty: true });
-  }, [cityValue, postalOptions, profile, setValue, postalCode]);
+    setField(postalCode, "");
+  };
 
   const getError = (key: string): string | undefined => {
     const error = errors[key as keyof typeof errors];
@@ -212,7 +260,7 @@ export function AddressFields<T extends Record<string, unknown>>({
       : null;
 
   return (
-    <div className="space-y-4">
+    <div className={cn("space-y-4", disabled && "opacity-90")}>
       {sectionTitle && (
         <h3 className="font-body text-sm font-semibold text-primary-dark">
           {sectionTitle}
@@ -224,9 +272,10 @@ export function AddressFields<T extends Record<string, unknown>>({
         label={t("country")}
         placeholder={t("selectCountry")}
         value={countryValue ?? ""}
-        onChange={(value) => setValue(country as never, value as never, { shouldValidate: true })}
+        onChange={handleCountryChange}
         options={COUNTRY_OPTIONS}
         error={getError(country)}
+        disabled={disabled}
       />
 
       {profile ? (
@@ -236,12 +285,10 @@ export function AddressFields<T extends Record<string, unknown>>({
             label={labels.state}
             placeholder={t("selectState")}
             value={stateValue ?? ""}
-            onChange={(value) =>
-              setValue(stateField as never, value as never, { shouldValidate: true })
-            }
+            onChange={handleStateChange}
             options={stateOptions}
             error={getError(stateField)}
-            disabled={!countryValue}
+            disabled={disabled || !countryValue}
           />
 
           <LocationSelect
@@ -249,12 +296,10 @@ export function AddressFields<T extends Record<string, unknown>>({
             label={labels.district}
             placeholder={t("selectDistrict")}
             value={districtValue ?? ""}
-            onChange={(value) =>
-              setValue(district as never, value as never, { shouldValidate: true })
-            }
+            onChange={handleDistrictChange}
             options={districtOptions}
             error={getError(district)}
-            disabled={!stateValue}
+            disabled={disabled || !stateValue}
           />
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -263,27 +308,26 @@ export function AddressFields<T extends Record<string, unknown>>({
               label={labels.city}
               placeholder={t("selectCity")}
               value={cityValue ?? ""}
-              onChange={(value) =>
-                setValue(city as never, value as never, { shouldValidate: true })
-              }
+              onChange={handleCityChange}
               options={cityOptions}
               error={getError(city)}
-              disabled={!districtValue}
+              disabled={disabled || !districtValue}
             />
 
             <Controller
               name={postalCode as never}
               control={control}
               render={({ field }) => (
-                <LocationSelect
+                <PostalCodeField
                   id={`${prefix}-postal`}
                   label={labels.postalCode}
                   placeholder={t("selectPostal")}
+                  hint={t("postalHint")}
                   value={String(field.value ?? "")}
                   onChange={field.onChange}
                   options={postalOptions}
                   error={getError(postalCode)}
-                  disabled={!cityValue || postalOptions.length === 0}
+                  disabled={disabled}
                 />
               )}
             />
@@ -295,6 +339,7 @@ export function AddressFields<T extends Record<string, unknown>>({
             <input
               placeholder={t("city")}
               className={formInputClass}
+              disabled={disabled}
               {...register(city as never)}
             />
             {getError(city) && <p className={formErrorClass}>{getError(city)}</p>}
@@ -303,6 +348,7 @@ export function AddressFields<T extends Record<string, unknown>>({
             <input
               placeholder={t("district")}
               className={formInputClass}
+              disabled={disabled}
               {...register(district as never)}
             />
             {getError(district) && (
@@ -316,6 +362,7 @@ export function AddressFields<T extends Record<string, unknown>>({
         <input
           placeholder={t("line1")}
           className={formInputClass}
+          disabled={disabled}
           {...register(line1 as never)}
         />
         {getError(line1) && <p className={formErrorClass}>{getError(line1)}</p>}
@@ -324,6 +371,7 @@ export function AddressFields<T extends Record<string, unknown>>({
       <input
         placeholder={t("line2")}
         className={formInputClass}
+        disabled={disabled}
         {...register(line2 as never)}
       />
     </div>

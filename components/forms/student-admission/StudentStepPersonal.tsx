@@ -138,7 +138,7 @@ export function StudentStepPersonal() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
+        <div className="min-w-0">
           <BilingualLabel
             htmlFor="whatsapp"
             labelBn="WhatsApp নম্বর"
@@ -161,7 +161,7 @@ export function StudentStepPersonal() {
             <p className={formErrorClass}>{errors.whatsapp.message}</p>
           )}
         </div>
-        <div>
+        <div className="min-w-0">
           <BilingualLabel
             htmlFor="guardianWhatsapp"
             labelBn="অভিভাবকের WhatsApp"

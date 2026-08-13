@@ -278,7 +278,7 @@ export function StudentStepAdmissionFee() {
           <FileDropzone
             id="admissionPaymentProofFile"
             label={t("proofLabel")}
-            accept="image/*"
+            kind="image"
             value={field.value ?? null}
             onChange={field.onChange}
             error={errors.admissionPaymentProofFile?.message}

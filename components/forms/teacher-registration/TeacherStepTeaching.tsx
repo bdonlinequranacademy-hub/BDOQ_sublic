@@ -48,43 +48,24 @@ export function TeacherStepTeaching() {
         />
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <BilingualLabel
-            htmlFor="teachingExperience"
-            labelBn="শিক্ষকতা অভিজ্ঞতা"
-            labelEn="Teaching experience"
-            required
-          />
-          <input
-            id="teachingExperience"
-            className={formInputClass}
-            placeholder={t("placeholders.experience")}
-            {...register("teachingExperience")}
-          />
-          {errors.teachingExperience && (
-            <p className={formErrorClass}>
-              {errors.teachingExperience.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <BilingualLabel
-            htmlFor="expectedSalary"
-            labelBn="প্রত্যাশিত বেতন"
-            labelEn="Expected salary"
-            required
-          />
-          <input
-            id="expectedSalary"
-            className={formInputClass}
-            placeholder={t("placeholders.salary")}
-            {...register("expectedSalary")}
-          />
-          {errors.expectedSalary && (
-            <p className={formErrorClass}>{errors.expectedSalary.message}</p>
-          )}
-        </div>
+      <div>
+        <BilingualLabel
+          htmlFor="teachingExperience"
+          labelBn="শিক্ষকতা অভিজ্ঞতা"
+          labelEn="Teaching experience"
+          required
+        />
+        <input
+          id="teachingExperience"
+          className={formInputClass}
+          placeholder={t("placeholders.experience")}
+          {...register("teachingExperience")}
+        />
+        {errors.teachingExperience && (
+          <p className={formErrorClass}>
+            {errors.teachingExperience.message}
+          </p>
+        )}
       </div>
 
       <div>

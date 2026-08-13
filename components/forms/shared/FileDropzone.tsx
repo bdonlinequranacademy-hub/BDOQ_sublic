@@ -1,18 +1,27 @@
 "use client";
 
-import { Upload, X } from "lucide-react";
+import { FileText, Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/cn";
+import {
+  DOCUMENT_ACCEPT,
+  isImageFile,
+  isPdfFile,
+  validateUploadFile,
+  type UploadKind,
+} from "@/lib/uploadLimits";
 
 interface IFileDropzoneProps {
   id: string;
   label: string;
-  accept: string;
+  accept?: string;
   value: File | null;
   onChange: (file: File | null) => void;
   error?: string;
+  kind?: UploadKind;
+  hint?: string;
 }
 
 export function FileDropzone({
@@ -22,13 +31,21 @@ export function FileDropzone({
   value,
   onChange,
   error,
+  kind = "document",
+  hint,
 }: IFileDropzoneProps) {
   const t = useTranslations("forms.fileDropzone");
+  const tValidation = useTranslations("forms.validation");
   const inputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [localError, setLocalError] = useState<string | null>(null);
+
+  const resolvedAccept = accept ?? (kind === "image" ? "image/*" : DOCUMENT_ACCEPT);
+  const resolvedHint =
+    hint ?? (kind === "image" ? t("imageHint") : t("pdfOrImageHint"));
 
   useEffect(() => {
-    if (!value || !value.type.startsWith("image/")) {
+    if (!value || !isImageFile(value)) {
       setPreviewUrl(null);
       return;
     }
@@ -39,13 +56,32 @@ export function FileDropzone({
   }, [value]);
 
   const handleFile = (file: File | undefined): void => {
-    if (file) onChange(file);
+    if (!file) return;
+
+    const message = validateUploadFile(file, kind, {
+      fileSize10mb: tValidation("fileSize10mb"),
+      imageSize5mb: tValidation("imageSize5mb"),
+      documentType: tValidation("documentType"),
+      imageType: tValidation("imageType"),
+    });
+
+    if (message) {
+      setLocalError(message);
+      if (inputRef.current) inputRef.current.value = "";
+      return;
+    }
+
+    setLocalError(null);
+    onChange(file);
   };
 
   const clearFile = (): void => {
+    setLocalError(null);
     onChange(null);
     if (inputRef.current) inputRef.current.value = "";
   };
+
+  const displayError = error ?? localError;
 
   return (
     <div>
@@ -86,6 +122,38 @@ export function FileDropzone({
             {t("replaceFile")}
           </button>
         </div>
+      ) : value ? (
+        <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-bg-light/40 p-4">
+          <div className="flex items-start gap-3">
+            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <FileText className="size-5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="truncate font-body text-sm font-semibold text-text-dark">
+                {t("selectedFile", { name: value.name })}
+              </p>
+              <p className="mt-0.5 font-body text-xs text-text-gray">
+                {isPdfFile(value) ? "PDF" : value.type || "File"} ·{" "}
+                {(value.size / (1024 * 1024)).toFixed(1)} MB
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={clearFile}
+              className="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-text-gray transition hover:bg-white hover:text-red-600"
+              aria-label={t("removeFile")}
+            >
+              <X className="size-4" aria-hidden="true" />
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            className="mt-3 w-full rounded-full border border-primary/30 px-4 py-2 font-body text-sm font-semibold text-primary transition hover:bg-primary/5"
+          >
+            {t("replaceFile")}
+          </button>
+        </div>
       ) : (
         <div
           role="button"
@@ -101,7 +169,7 @@ export function FileDropzone({
           }}
           className={cn(
             "flex min-h-[120px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-4 py-6 transition-colors",
-            error
+            displayError
               ? "border-red-300 bg-red-50/50"
               : "border-gray-200 bg-bg-light/50 hover:border-primary/40"
           )}
@@ -110,7 +178,9 @@ export function FileDropzone({
           <p className="text-center font-body text-sm text-text-dark">
             {t("prompt")}
           </p>
-          <p className="mt-1 font-body text-xs text-text-gray">{accept}</p>
+          <p className="mt-1 text-center font-body text-xs text-text-gray">
+            {resolvedHint}
+          </p>
         </div>
       )}
 
@@ -118,15 +188,21 @@ export function FileDropzone({
         ref={inputRef}
         id={id}
         type="file"
-        accept={accept}
+        accept={resolvedAccept}
         className="sr-only"
         onChange={(e) => handleFile(e.target.files?.[0])}
       />
-      {error && (
+      {displayError && (
         <p className="mt-1 text-xs text-red-600" role="alert">
-          {error}
+          {displayError}
         </p>
       )}
     </div>
   );
 }
+
+export {
+  DOCUMENT_ACCEPT,
+  IMAGE_MAX_BYTES,
+  PDF_MAX_BYTES,
+} from "@/lib/uploadLimits";

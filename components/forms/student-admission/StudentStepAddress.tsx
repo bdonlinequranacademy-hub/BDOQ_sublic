@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useFormContext, useWatch } from "react-hook-form";
 import { AddressFields } from "@/components/forms/shared/AddressFields";
@@ -35,14 +35,15 @@ export function StudentStepAddress() {
 
     const [line1, line2, stateName, city, district, postalCode, country] =
       currentValues;
+    const opts = { shouldDirty: true, shouldValidate: true } as const;
 
-    setValue("permanentAddressLine1", line1 ?? "", { shouldDirty: true });
-    setValue("permanentAddressLine2", line2 ?? "", { shouldDirty: true });
-    setValue("permanentState", stateName ?? "", { shouldDirty: true });
-    setValue("permanentCity", city ?? "", { shouldDirty: true });
-    setValue("permanentDistrict", district ?? "", { shouldDirty: true });
-    setValue("permanentPostalCode", postalCode ?? "", { shouldDirty: true });
-    setValue("permanentCountry", country ?? "", { shouldDirty: true });
+    setValue("permanentCountry", country ?? "", opts);
+    setValue("permanentState", stateName ?? "", opts);
+    setValue("permanentDistrict", district ?? "", opts);
+    setValue("permanentCity", city ?? "", opts);
+    setValue("permanentPostalCode", postalCode ?? "", opts);
+    setValue("permanentAddressLine1", line1 ?? "", opts);
+    setValue("permanentAddressLine2", line2 ?? "", opts);
   }, [currentValues, sameAsCurrent, setValue]);
 
   return (
@@ -72,6 +73,7 @@ export function StudentStepAddress() {
         errors={errors}
         titleBn="স্থায়ী ঠিকানা"
         titleEn="Permanent address"
+        disabled={Boolean(sameAsCurrent)}
       />
     </div>
   );

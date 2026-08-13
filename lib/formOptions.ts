@@ -267,6 +267,11 @@ export const TEACHING_DEVICE_OPTIONS = [
   { value: "mobile", labelBn: "মোবাইল", labelEn: "Mobile" },
 ] as const;
 
+export const EDUCATION_YEAR_OPTIONS = Array.from(
+  { length: 60 },
+  (_, index) => String(new Date().getFullYear() - index)
+);
+
 export const HOUR_OPTIONS = Array.from({ length: 12 }, (_, index) =>
   String(index + 1).padStart(2, "0")
 );

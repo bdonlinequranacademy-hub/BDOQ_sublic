@@ -1,0 +1,79 @@
+/* Tunable layout tokens for IslamicAcademyHeroVisual */
+.iahv {
+  --iahv-boy-x: 2%;
+  --iahv-boy-y: 52%;
+  --iahv-boy-w: 42%;
+  --iahv-girl-x: 58%;
+  --iahv-girl-y: 50%;
+  --iahv-girl-w: 40%;
+  --iahv-teacher-y: 6%;
+  --iahv-teacher-w: 72%;
+  --iahv-float-boy: 5.5s;
+  --iahv-float-girl: 6.4s;
+  --iahv-float-screen: 7.2s;
+}
+
+@keyframes iahv-float-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+@keyframes iahv-float-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes iahv-float-screen {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+.iahv__float-boy {
+  animation: iahv-float-a var(--iahv-float-boy) ease-in-out infinite;
+}
+
+.iahv__float-girl {
+  animation: iahv-float-b var(--iahv-float-girl) ease-in-out infinite;
+  animation-delay: 0.7s;
+}
+
+.iahv__float-screen {
+  animation: iahv-float-screen var(--iahv-float-screen) ease-in-out infinite;
+  animation-delay: 0.35s;
+}
+
+@media (max-width: 639px) {
+  .iahv {
+    --iahv-boy-x: 0%;
+    --iahv-boy-y: 54%;
+    --iahv-boy-w: 44%;
+    --iahv-girl-x: 56%;
+    --iahv-girl-y: 52%;
+    --iahv-girl-w: 44%;
+    --iahv-teacher-y: 4%;
+    --iahv-teacher-w: 78%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iahv__float-boy,
+  .iahv__float-girl,
+  .iahv__float-screen {
+    animation: none;
+  }
+}

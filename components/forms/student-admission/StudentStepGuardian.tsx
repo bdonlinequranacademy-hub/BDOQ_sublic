@@ -62,7 +62,7 @@ export function StudentStepGuardian() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
+        <div className="min-w-0">
           <BilingualLabel
             htmlFor="parentWhatsapp"
             labelBn="অভিভাবকের WhatsApp"

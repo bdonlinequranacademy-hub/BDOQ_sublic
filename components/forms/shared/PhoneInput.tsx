@@ -129,8 +129,8 @@ export const PhoneInput = forwardRef<HTMLInputElement, IPhoneInputProps>(
     const selectedDial = findDialCodeEntry(dialCode) ?? PHONE_DIAL_CODES[0];
 
     return (
-      <div className="flex rounded-xl border border-gray-200 overflow-visible focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary">
-        <div className="relative z-[2] w-[132px] shrink-0 border-r border-gray-200 bg-bg-light sm:w-[148px]">
+      <div className="flex w-full min-w-0 items-stretch overflow-visible rounded-2xl border border-gray-200 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20">
+        <div className="relative z-[2] w-[5.75rem] shrink-0 border-r border-gray-200 bg-bg-light sm:w-[6.5rem]">
           <SearchableListbox
             id={`${id}-dial-code`}
             value={dialCode}
@@ -138,7 +138,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, IPhoneInputProps>(
             options={dialOptions}
             ariaLabel={t("selectCountryCode")}
             searchPlaceholder={t("searchCountryCode")}
-            buttonClassName="min-h-[44px] rounded-none border-0 bg-transparent px-2.5 py-2.5 shadow-none focus:ring-0"
+            buttonClassName="min-h-[48px] rounded-none border-0 bg-transparent px-2.5 py-2.5 shadow-none focus:ring-0"
             dropdownMinWidth={300}
             renderValue={() => (
               <>
@@ -161,7 +161,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, IPhoneInputProps>(
           onChange={(event) => handleLocalChange(event.target.value)}
           onBlur={onBlur}
           className={cn(
-            "relative z-[1] flex-1 min-h-[44px] border-0 px-4 py-2.5 font-body text-sm focus:outline-none focus:ring-0",
+            "relative z-[1] min-h-[48px] min-w-0 flex-1 border-0 bg-transparent px-3 py-2.5 font-body text-sm focus:outline-none focus:ring-0 sm:px-4",
             className
           )}
           {...props}

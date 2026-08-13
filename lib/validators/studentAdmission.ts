@@ -92,7 +92,7 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
 
   const proofSchema = z
     .instanceof(File, { message: v("imageRequired") })
-    .refine((file) => file.size <= 5 * 1024 * 1024, v("fileSize5mb"))
+    .refine((file) => file.size <= 5 * 1024 * 1024, v("imageSize5mb"))
     .refine((file) => file.type.startsWith("image/"), v("imageType"));
 
   const step5Base = z.object({

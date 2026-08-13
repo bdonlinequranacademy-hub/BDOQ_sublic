@@ -27,7 +27,7 @@ const weekdayEnum = z.enum([
   "thursday",
   "friday",
 ]);
-const timeSlotEnum = z.enum(["morning", "noon", "evening", "night"]);
+const timeSlotEnum = z.enum(["morning", "noon", "evening", "night", "other"]);
 const languageEnum = z.enum(["bengali", "english", "arabic", "urdu"]);
 const deviceEnum = z.enum(["laptop", "desktop", "tablet", "mobile"]);
 const internetTypeEnum = z.enum(["wifi", "mobile", "both"]);
@@ -64,14 +64,37 @@ function applyHafizRefinement<
   }
 }
 
+function isPdfLike(file: File): boolean {
+  return (
+    file.type === "application/pdf" ||
+    file.type === "application/x-pdf" ||
+    file.name.toLowerCase().endsWith(".pdf")
+  );
+}
+
+function isImageLike(file: File): boolean {
+  return file.type.startsWith("image/");
+}
+
 export function createTeacherRegistrationSchemas(v: FormValidationFn) {
-  const fileSchema = z
+  const documentSchema = z
     .instanceof(File, { message: v("fileRequired") })
-    .refine((file) => file.size <= 5 * 1024 * 1024, v("fileSize5mb"));
+    .refine(
+      (file) => isPdfLike(file) || isImageLike(file),
+      v("documentType")
+    )
+    .refine(
+      (file) => (isPdfLike(file) ? file.size <= 10 * 1024 * 1024 : true),
+      v("fileSize10mb")
+    )
+    .refine(
+      (file) => (isImageLike(file) ? file.size <= 5 * 1024 * 1024 : true),
+      v("imageSize5mb")
+    );
 
   const imageSchema = z
     .instanceof(File, { message: v("imageRequired") })
-    .refine((file) => file.size <= 3 * 1024 * 1024, v("imageSize3mb"))
+    .refine((file) => file.size <= 5 * 1024 * 1024, v("imageSize5mb"))
     .refine((file) => file.type.startsWith("image/"), v("imageType"));
 
   const step1 = z.object({
@@ -92,10 +115,9 @@ export function createTeacherRegistrationSchemas(v: FormValidationFn) {
     educationSubject: z.string().min(2, v("educationSubjectRequired")),
     educationInstitution: z.string().min(2, v("institutionRequired")),
     educationYear: z.string().min(4, v("yearRequired")),
-    certificateFile: fileSchema,
+    certificateFile: documentSchema,
     isHafiz: hafizEnum,
     parasMemorized: z.string().optional(),
-    islamicQualification: z.string().min(2, v("islamicQualRequired")),
   });
 
   const step2 = step2Base.superRefine((data, ctx) =>
@@ -108,7 +130,6 @@ export function createTeacherRegistrationSchemas(v: FormValidationFn) {
     availableDays: z.array(weekdayEnum).min(1, v("daysRequired")),
     availableTimeSlots: z.array(timeSlotEnum).min(1, v("slotsRequired")),
     languages: z.array(languageEnum).min(1, v("languagesRequired")),
-    expectedSalary: z.string().min(1, v("salaryRequired")),
     referralSource: referralEnum,
     tajweedExperience: z.string().min(2, v("tajweedRequired")),
     hifzExperience: z.string().optional(),
@@ -116,8 +137,8 @@ export function createTeacherRegistrationSchemas(v: FormValidationFn) {
 
   const step4 = z.object({
     profilePhotoFile: imageSchema,
-    cvFile: fileSchema,
-    screenshotFile: fileSchema.optional(),
+    cvFile: documentSchema,
+    screenshotFile: imageSchema.optional().nullable(),
     teachingDevices: z.array(deviceEnum).min(1, v("deviceRequired")),
     internetType: internetTypeEnum,
     motivation: z.string().min(20, v("motivationRequired")),
@@ -189,7 +210,6 @@ export const TEACHER_REGISTRATION_STEPS = [
       "certificateFile",
       "isHafiz",
       "parasMemorized",
-      "islamicQualification",
     ],
   },
   {
@@ -202,7 +222,6 @@ export const TEACHER_REGISTRATION_STEPS = [
       "availableDays",
       "availableTimeSlots",
       "languages",
-      "expectedSalary",
       "referralSource",
       "tajweedExperience",
     ],

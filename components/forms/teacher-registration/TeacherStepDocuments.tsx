@@ -34,7 +34,7 @@ export function TeacherStepDocuments() {
             <FileDropzone
               id="profilePhotoFile"
               label={t("files.profilePhoto")}
-              accept="image/*"
+              kind="image"
               value={field.value ?? null}
               onChange={field.onChange}
               error={errors.profilePhotoFile?.message}
@@ -48,7 +48,7 @@ export function TeacherStepDocuments() {
             <FileDropzone
               id="cvFile"
               label={t("files.cv")}
-              accept=".pdf,application/pdf"
+              kind="document"
               value={field.value ?? null}
               onChange={field.onChange}
               error={errors.cvFile?.message}
@@ -64,7 +64,7 @@ export function TeacherStepDocuments() {
           <FileDropzone
             id="screenshotFile"
             label={t("files.screenshot")}
-            accept="image/*"
+            kind="image"
             value={field.value ?? null}
             onChange={field.onChange}
             error={errors.screenshotFile?.message}

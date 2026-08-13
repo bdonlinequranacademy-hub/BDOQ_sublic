@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { BilingualLabel } from "@/components/forms/shared/BilingualLabel";
@@ -8,8 +9,11 @@ import { FormSelect } from "@/components/forms/shared/FormSelect";
 import {
   formErrorClass,
   formInputClass,
+  formSelectChevronClass,
+  formSelectClass,
+  formSelectWrapperClass,
 } from "@/components/forms/shared/formStyles";
-import { HAFIZ_OPTIONS } from "@/lib/formOptions";
+import { EDUCATION_YEAR_OPTIONS, HAFIZ_OPTIONS } from "@/lib/formOptions";
 import type { TeacherRegistrationFormValues } from "@/lib/validators/teacherRegistration";
 
 export function TeacherStepAcademic() {
@@ -87,11 +91,21 @@ export function TeacherStepAcademic() {
             labelEn="Year of passing"
             required
           />
-          <input
-            id="educationYear"
-            className={formInputClass}
-            {...register("educationYear")}
-          />
+          <div className={formSelectWrapperClass}>
+            <select
+              id="educationYear"
+              className={formSelectClass}
+              {...register("educationYear")}
+            >
+              <option value="">{t("placeholders.year")}</option>
+              {EDUCATION_YEAR_OPTIONS.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className={formSelectChevronClass} aria-hidden="true" />
+          </div>
           {errors.educationYear && (
             <p className={formErrorClass}>{errors.educationYear.message}</p>
           )}
@@ -105,7 +119,7 @@ export function TeacherStepAcademic() {
           <FileDropzone
             id="certificateFile"
             label={t("files.certificate")}
-            accept=".pdf,application/pdf"
+            kind="document"
             value={field.value ?? null}
             onChange={field.onChange}
             error={errors.certificateFile?.message}
@@ -153,26 +167,6 @@ export function TeacherStepAcademic() {
           )}
         </div>
       )}
-
-      <div>
-        <BilingualLabel
-          htmlFor="islamicQualification"
-          labelBn="ইসলামিক যোগ্যতা"
-          labelEn="Islamic qualification"
-          required
-        />
-        <input
-          id="islamicQualification"
-          className={formInputClass}
-          placeholder={t("placeholders.islamicQual")}
-          {...register("islamicQualification")}
-        />
-        {errors.islamicQualification && (
-          <p className={formErrorClass}>
-            {errors.islamicQualification.message}
-          </p>
-        )}
-      </div>
     </div>
   );
 }

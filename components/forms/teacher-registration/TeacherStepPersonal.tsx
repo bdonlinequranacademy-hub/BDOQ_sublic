@@ -55,13 +55,14 @@ export function TeacherStepPersonal() {
     if (!sameAsCurrent) return;
     const [line1, line2, stateName, city, district, postalCode, country] =
       currentValues;
-    setValue("permanentAddressLine1", line1 ?? "", { shouldDirty: true });
-    setValue("permanentAddressLine2", line2 ?? "", { shouldDirty: true });
-    setValue("permanentState", stateName ?? "", { shouldDirty: true });
-    setValue("permanentCity", city ?? "", { shouldDirty: true });
-    setValue("permanentDistrict", district ?? "", { shouldDirty: true });
-    setValue("permanentPostalCode", postalCode ?? "", { shouldDirty: true });
-    setValue("permanentCountry", country ?? "", { shouldDirty: true });
+    const opts = { shouldDirty: true, shouldValidate: true } as const;
+    setValue("permanentCountry", country ?? "", opts);
+    setValue("permanentState", stateName ?? "", opts);
+    setValue("permanentDistrict", district ?? "", opts);
+    setValue("permanentCity", city ?? "", opts);
+    setValue("permanentPostalCode", postalCode ?? "", opts);
+    setValue("permanentAddressLine1", line1 ?? "", opts);
+    setValue("permanentAddressLine2", line2 ?? "", opts);
   }, [currentValues, sameAsCurrent, setValue]);
 
   return (
@@ -165,25 +166,26 @@ export function TeacherStepPersonal() {
         </div>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-3">
-        <div>
-          <BilingualLabel
-            htmlFor="email"
-            labelBn="ইমেইল"
-            labelEn="Email"
-            required
-          />
-          <input
-            id="email"
-            type="email"
-            className={formInputClass}
-            {...register("email")}
-          />
-          {errors.email && (
-            <p className={formErrorClass}>{errors.email.message}</p>
-          )}
-        </div>
-        <div>
+      <div>
+        <BilingualLabel
+          htmlFor="email"
+          labelBn="ইমেইল"
+          labelEn="Email"
+          required
+        />
+        <input
+          id="email"
+          type="email"
+          className={formInputClass}
+          {...register("email")}
+        />
+        {errors.email && (
+          <p className={formErrorClass}>{errors.email.message}</p>
+        )}
+      </div>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="min-w-0">
           <BilingualLabel
             htmlFor="phone"
             labelBn="ফোন"
@@ -206,7 +208,7 @@ export function TeacherStepPersonal() {
             <p className={formErrorClass}>{errors.phone.message}</p>
           )}
         </div>
-        <div>
+        <div className="min-w-0">
           <BilingualLabel
             htmlFor="whatsapp"
             labelBn="WhatsApp"
@@ -256,6 +258,7 @@ export function TeacherStepPersonal() {
         errors={errors}
         titleBn="স্থায়ী ঠিকানা"
         titleEn="Permanent address"
+        disabled={Boolean(sameAsCurrent)}
       />
     </div>
   );
