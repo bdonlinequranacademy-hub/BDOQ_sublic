@@ -9,10 +9,10 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { HeroQuoteBanner } from "@/components/home/HeroQuoteBanner";
-import { IslamicAcademyHeroVisual } from "@/components/home/hero-visual/IslamicAcademyHeroVisual";
+import { PremiumHeroCarousel } from "@/components/home/PremiumHeroCarousel";
 import { SiteCta } from "@/components/shared/SiteCta";
 import { IslamicShapeBackdrop } from "@/components/shared/IslamicShapeBackdrop";
 import {
@@ -20,8 +20,6 @@ import {
   type IPremiumHeroCarouselSlide,
 } from "@/lib/i18n/usePremiumHeroCarouselSlides";
 import { cn } from "@/lib/cn";
-
-const SLIDE_AUTO_MS = 6000;
 
 const FEATURES = [
   { key: "teachers", icon: Users },
@@ -57,7 +55,7 @@ function HighlightedTitle({
   );
 }
 
-/** Flat 4-slide hero — mihrab visual + feature strip (mockup design) */
+/** Flat 4-slide hero — mihrab photo carousel + feature strip */
 export function PremiumHeroSection({
   cmsSlides,
 }: {
@@ -67,15 +65,6 @@ export function PremiumHeroSection({
   const slides = usePremiumHeroCarouselSlides(cmsSlides);
   const [activeIndex, setActiveIndex] = useState(0);
   const slide = slides[activeIndex] ?? slides[0];
-
-  // Keep copy cycling after replacing the photo carousel with the animated visual
-  useEffect(() => {
-    if (slides.length < 2) return undefined;
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % slides.length);
-    }, SLIDE_AUTO_MS);
-    return () => window.clearInterval(timer);
-  }, [slides.length]);
 
   if (!slide) return null;
 
@@ -149,9 +138,13 @@ export function PremiumHeroSection({
             </AnimatePresence>
           </div>
 
-          {/* Right visual — animated academy composition */}
+          {/* Right visual — mihrab image slideshow */}
           <div className="order-1 mx-auto w-full max-w-lg pt-1 sm:pt-2 lg:order-2 lg:mx-0 lg:max-w-none lg:pt-4">
-            <IslamicAcademyHeroVisual />
+            <PremiumHeroCarousel
+              activeIndex={activeIndex}
+              onActiveIndexChange={setActiveIndex}
+              cmsSlides={cmsSlides}
+            />
           </div>
         </div>
 
