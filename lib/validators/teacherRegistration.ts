@@ -104,8 +104,6 @@ export function createTeacherRegistrationSchemas(v: FormValidationFn) {
     availableTimeSlots: z.array(timeSlotEnum).min(1, v("slotsRequired")),
     languages: z.array(languageEnum).min(1, v("languagesRequired")),
     referralSource: referralEnum,
-    tajweedExperience: z.string().min(2, v("tajweedRequired")),
-    hifzExperience: z.string().optional(),
   });
 
   const step4 = z.object({
@@ -196,7 +194,6 @@ export const TEACHER_REGISTRATION_STEPS = [
       "availableTimeSlots",
       "languages",
       "referralSource",
-      "tajweedExperience",
     ],
   },
   {

@@ -128,37 +128,6 @@ export function TeacherStepTeaching() {
         />
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <BilingualLabel
-            htmlFor="tajweedExperience"
-            labelBn="তাজবিদ অভিজ্ঞতা"
-            labelEn="Tajweed experience"
-            required
-          />
-          <input
-            id="tajweedExperience"
-            className={formInputClass}
-            {...register("tajweedExperience")}
-          />
-          {errors.tajweedExperience && (
-            <p className={formErrorClass}>{errors.tajweedExperience.message}</p>
-          )}
-        </div>
-        <div>
-          <BilingualLabel
-            htmlFor="hifzExperience"
-            labelBn="হিফজ অভিজ্ঞতা"
-            labelEn="Hifz experience"
-          />
-          <input
-            id="hifzExperience"
-            className={formInputClass}
-            {...register("hifzExperience")}
-          />
-        </div>
-      </div>
-
       <div>
         <BilingualLabel
           labelBn="আমাদের সম্পর্কে কীভাবে জানলেন?"

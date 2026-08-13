@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { useStepTitle } from "@/lib/i18n/useFormLocale";
 import type { FormLayoutVariant } from "@/lib/forms/formLayout";
 import { FormCard } from "@/components/forms/shared/FormCard";
@@ -42,6 +42,28 @@ export function FormWizardShell({
 }: IFormWizardShellProps) {
   const stepTitle = useStepTitle();
   const activeStep = steps[currentStep];
+  const stepTopRef = useRef<HTMLDivElement>(null);
+  const skipInitialScroll = useRef(true);
+
+  useEffect(() => {
+    if (skipInitialScroll.current) {
+      skipInitialScroll.current = false;
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      const node = stepTopRef.current;
+      if (!node) return;
+      const headerOffset = window.matchMedia("(min-width: 768px)").matches
+        ? 140
+        : 96;
+      const top =
+        node.getBoundingClientRect().top + window.scrollY - headerOffset;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    }, 80);
+
+    return () => window.clearTimeout(timer);
+  }, [currentStep]);
 
   return (
     <FormPageLayout
@@ -50,12 +72,14 @@ export function FormWizardShell({
       currentStep={currentStep}
     >
       <FormCard>
-        <WizardProgress steps={steps} currentStep={currentStep} compact />
+        <div ref={stepTopRef} className="scroll-mt-28 md:scroll-mt-36">
+          <WizardProgress steps={steps} currentStep={currentStep} compact />
 
-        <div className="mb-6 border-b border-gold/20 pb-5">
-          <h2 className="font-playfair text-xl font-bold text-primary-dark md:text-2xl">
-            {activeStep ? stepTitle(activeStep) : ""}
-          </h2>
+          <div className="mb-6 border-b border-gold/20 pb-5">
+            <h2 className="font-playfair text-xl font-bold text-primary-dark md:text-2xl">
+              {activeStep ? stepTitle(activeStep) : ""}
+            </h2>
+          </div>
         </div>
 
         <AnimatePresence mode="wait">

@@ -85,14 +85,6 @@ export function TeacherStepReview() {
         label: t("review.referral"),
         value: lookupLabel(REFERRAL_SOURCES, values.referralSource ?? ""),
       },
-      {
-        label: t("review.tajweedExperience"),
-        value: values.tajweedExperience ?? "",
-      },
-      {
-        label: t("review.hifzExperience"),
-        value: values.hifzExperience ?? "",
-      },
       { label: t("review.motivation"), value: values.motivation ?? "" },
     ],
     [values, t, lookupLabel]

@@ -67,7 +67,6 @@ export type FormValidationKey =
   | "slotsRequired"
   | "languagesRequired"
   | "salaryRequired"
-  | "tajweedRequired"
   | "motivationRequired"
   | "rulesRequired"
   | "contactNameRequired"
