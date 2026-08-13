@@ -253,9 +253,9 @@ export const formsMessages = {
       year: "Select year",
     },
     files: {
-      certificate: "Upload highest educational certificate (PDF or image)",
+      certificate: "Upload highest educational certificate (image)",
       profilePhoto: "Upload profile picture",
-      cv: "Upload CV / Resume (PDF or image)",
+      cv: "Upload CV / Resume (image)",
       screenshot: "Social media screenshot (optional)",
     },
     review: {

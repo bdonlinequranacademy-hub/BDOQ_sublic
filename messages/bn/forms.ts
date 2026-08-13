@@ -255,9 +255,9 @@ export const formsMessages = {
       year: "সাল নির্বাচন করুন",
     },
     files: {
-      certificate: "সর্বোচ্চ শিক্ষাগত সনদ আপলোড করুন (PDF অথবা ছবি)",
+      certificate: "সর্বোচ্চ শিক্ষাগত সনদ আপলোড করুন (ছবি)",
       profilePhoto: "প্রোফাইল ছবি আপলোড করুন",
-      cv: "CV / Resume আপলোড করুন (PDF অথবা ছবি)",
+      cv: "CV / Resume আপলোড করুন (ছবি)",
       screenshot: "সোশ্যাল মিডিয়া স্ক্রিনশট (ঐচ্ছিক)",
     },
     review: {

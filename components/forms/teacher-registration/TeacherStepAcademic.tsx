@@ -119,7 +119,7 @@ export function TeacherStepAcademic() {
           <FileDropzone
             id="certificateFile"
             label={t("files.certificate")}
-            kind="document"
+            kind="image"
             value={field.value ?? null}
             onChange={field.onChange}
             error={errors.certificateFile?.message}

@@ -48,7 +48,7 @@ export function TeacherStepDocuments() {
             <FileDropzone
               id="cvFile"
               label={t("files.cv")}
-              kind="document"
+              kind="image"
               value={field.value ?? null}
               onChange={field.onChange}
               error={errors.cvFile?.message}

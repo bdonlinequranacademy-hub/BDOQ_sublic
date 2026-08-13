@@ -64,34 +64,7 @@ function applyHafizRefinement<
   }
 }
 
-function isPdfLike(file: File): boolean {
-  return (
-    file.type === "application/pdf" ||
-    file.type === "application/x-pdf" ||
-    file.name.toLowerCase().endsWith(".pdf")
-  );
-}
-
-function isImageLike(file: File): boolean {
-  return file.type.startsWith("image/");
-}
-
 export function createTeacherRegistrationSchemas(v: FormValidationFn) {
-  const documentSchema = z
-    .instanceof(File, { message: v("fileRequired") })
-    .refine(
-      (file) => isPdfLike(file) || isImageLike(file),
-      v("documentType")
-    )
-    .refine(
-      (file) => (isPdfLike(file) ? file.size <= 10 * 1024 * 1024 : true),
-      v("fileSize10mb")
-    )
-    .refine(
-      (file) => (isImageLike(file) ? file.size <= 5 * 1024 * 1024 : true),
-      v("imageSize5mb")
-    );
-
   const imageSchema = z
     .instanceof(File, { message: v("imageRequired") })
     .refine((file) => file.size <= 5 * 1024 * 1024, v("imageSize5mb"))
@@ -115,7 +88,7 @@ export function createTeacherRegistrationSchemas(v: FormValidationFn) {
     educationSubject: z.string().min(2, v("educationSubjectRequired")),
     educationInstitution: z.string().min(2, v("institutionRequired")),
     educationYear: z.string().min(4, v("yearRequired")),
-    certificateFile: documentSchema,
+    certificateFile: imageSchema,
     isHafiz: hafizEnum,
     parasMemorized: z.string().optional(),
   });
@@ -137,7 +110,7 @@ export function createTeacherRegistrationSchemas(v: FormValidationFn) {
 
   const step4 = z.object({
     profilePhotoFile: imageSchema,
-    cvFile: documentSchema,
+    cvFile: imageSchema,
     screenshotFile: imageSchema.optional().nullable(),
     teachingDevices: z.array(deviceEnum).min(1, v("deviceRequired")),
     internetType: internetTypeEnum,
