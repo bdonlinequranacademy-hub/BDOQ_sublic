@@ -202,9 +202,9 @@ export function StudentAdmissionWizard() {
         );
       }
 
-      const fileKeys = new Set(["admissionPaymentProofFile"]);
+      const omitKeys = new Set(["admissionPaymentProofFile", "confirmPassword"]);
       const rest = Object.fromEntries(
-        Object.entries(data).filter(([key]) => !fileKeys.has(key))
+        Object.entries(data).filter(([key]) => !omitKeys.has(key))
       );
 
       formData.append(

@@ -200,6 +200,8 @@ export const formsMessages = {
       nationality: "Nationality",
       gender: "Gender",
       email: "Email",
+      password: "Portal password",
+      passwordSet: "Set (hidden)",
       whatsapp: "WhatsApp",
       guardianWhatsapp: "Guardian WhatsApp",
       currentAddress: "Current address",
@@ -231,7 +233,7 @@ export const formsMessages = {
     wizard: {
       successTitle: "Jazakumullah Khayran",
       successBody:
-        "Your student admission application is received. We will verify your admission fee payment and contact you within 24–48 hours.",
+        "Your student admission application is received. We will verify your admission fee payment and contact you within 24–48 hours. After approval, sign in with the email and password you set here.",
       bookTrial: "Book free trial class",
       error: "Submission failed. Please try again or contact us on WhatsApp.",
       validationError: "Please complete all required fields. We moved you to the first step that needs attention.",
@@ -263,6 +265,8 @@ export const formsMessages = {
       fullName: "Full name",
       fatherName: "Father's name",
       email: "Email",
+      password: "Portal password",
+      passwordSet: "Set (hidden)",
       phone: "Phone",
       subjects: "Subjects",
       experience: "Experience",
@@ -280,7 +284,7 @@ export const formsMessages = {
     wizard: {
       successTitle: "Jazakumullah Khayran",
       successBody:
-        "Your teacher registration is received. We will review your application and contact you soon.",
+        "Your teacher registration is received. We will review your application and contact you soon. After approval, sign in with the email and password you set here.",
       error:
         "Submission failed. Please check your files and try again, or contact us on WhatsApp.",
       submit: "Submit Registration",
@@ -299,6 +303,10 @@ export const formsMessages = {
     nationalityRequired: "Please select nationality",
     emailRequired: "Valid email is required",
     emailInvalid: "Valid email",
+    passwordRequired: "Password is required",
+    passwordMin: "Password must be at least 6 characters",
+    confirmPasswordRequired: "Please confirm your password",
+    passwordMismatch: "Passwords do not match",
     currentAddressRequired: "Current address is required",
     cityRequired: "City is required",
     districtRequired: "District is required",

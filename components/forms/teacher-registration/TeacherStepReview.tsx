@@ -36,6 +36,10 @@ export function TeacherStepReview() {
       { label: t("review.fullName"), value: values.fullName ?? "" },
       { label: t("review.fatherName"), value: values.fatherName ?? "" },
       { label: t("review.email"), value: values.email ?? "" },
+      {
+        label: t("review.password"),
+        value: values.password ? t("review.passwordSet") : "",
+      },
       { label: t("review.phone"), value: values.phone ?? "" },
       {
         label: t("review.subjects"),

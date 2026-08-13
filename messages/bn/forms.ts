@@ -200,6 +200,8 @@ export const formsMessages = {
       nationality: "জাতীয়তা",
       gender: "লিঙ্গ",
       email: "ইমেইল",
+      password: "পোর্টাল পাসওয়ার্ড",
+      passwordSet: "সেট করা হয়েছে (গোপন)",
       whatsapp: "WhatsApp",
       guardianWhatsapp: "অভিভাবকের WhatsApp",
       currentAddress: "বর্তমান ঠিকানা",
@@ -231,7 +233,7 @@ export const formsMessages = {
     wizard: {
       successTitle: "জাযাকুমুল্লাহু খায়রান",
       successBody:
-        "আপনার শিক্ষার্থী ভর্তির আবেদন গ্রহণ করা হয়েছে। ভর্তি ফি যাচাই করে ২৪–৪৮ ঘণ্টার মধ্যে আমাদের টিম যোগাযোগ করবে।",
+        "আপনার শিক্ষার্থী ভর্তির আবেদন গ্রহণ করা হয়েছে। ভর্তি ফি যাচাই করে ২৪–৪৮ ঘণ্টার মধ্যে আমাদের টিম যোগাযোগ করবে। অনুমোদনের পর এখানে সেট করা ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করবেন।",
       bookTrial: "ফ্রি ট্রায়াল ক্লাস বুক করুন",
       error:
         "জমা দেওয়া ব্যর্থ হয়েছে। আবার চেষ্টা করুন বা WhatsApp-এ যোগাযোগ করুন।",
@@ -265,6 +267,8 @@ export const formsMessages = {
       fullName: "সম্পূর্ণ নাম",
       fatherName: "পিতার নাম",
       email: "ইমেইল",
+      password: "পোর্টাল পাসওয়ার্ড",
+      passwordSet: "সেট করা হয়েছে (গোপন)",
       phone: "ফোন",
       subjects: "বিষয়",
       experience: "অভিজ্ঞতা",
@@ -282,7 +286,7 @@ export const formsMessages = {
     wizard: {
       successTitle: "জাযাকুমুল্লাহু খায়রান",
       successBody:
-        "আপনার শিক্ষক নিবন্ধন গ্রহণ করা হয়েছে। আমরা আবেদন পর্যালোচনা করে শীঘ্রই যোগাযোগ করব।",
+        "আপনার শিক্ষক নিবন্ধন গ্রহণ করা হয়েছে। আমরা আবেদন পর্যালোচনা করে শীঘ্রই যোগাযোগ করব। অনুমোদনের পর এখানে সেট করা ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করবেন।",
       error:
         "জমা দেওয়া ব্যর্থ হয়েছে। ফাইলগুলো পরীক্ষা করে আবার চেষ্টা করুন বা WhatsApp-এ যোগাযোগ করুন।",
       submit: "নিবন্ধন জমা দিন",
@@ -301,6 +305,10 @@ export const formsMessages = {
     nationalityRequired: "জাতীয়তা নির্বাচন করুন",
     emailRequired: "বৈধ ইমেইল প্রয়োজন",
     emailInvalid: "বৈধ ইমেইল",
+    passwordRequired: "পাসওয়ার্ড প্রয়োজন",
+    passwordMin: "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে",
+    confirmPasswordRequired: "পাসওয়ার্ড নিশ্চিত করুন",
+    passwordMismatch: "পাসওয়ার্ড মিলছে না",
     currentAddressRequired: "বর্তমান ঠিকানা প্রয়োজন",
     cityRequired: "শহর প্রয়োজন",
     districtRequired: "জেলা প্রয়োজন",

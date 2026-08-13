@@ -48,8 +48,22 @@ function addressFields(v: FormValidationFn) {
   };
 }
 
+function applyPasswordMatch(
+  data: { password: string; confirmPassword: string },
+  ctx: z.RefinementCtx,
+  v: FormValidationFn
+): void {
+  if (data.password !== data.confirmPassword) {
+    ctx.addIssue({
+      code: "custom",
+      message: v("passwordMismatch"),
+      path: ["confirmPassword"],
+    });
+  }
+}
+
 export function createStudentAdmissionSchemas(v: FormValidationFn) {
-  const step1 = z.object({
+  const step1Base = z.object({
     fullName: z.string().min(2, v("fullNameRequired")),
     dateOfBirth: z.string().min(1, v("dobRequired")),
     nationality: z.string().min(2, v("nationalityRequired")),
@@ -57,7 +71,13 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     email: z.string().email(v("emailRequired")),
     whatsapp: z.string().min(10, v("whatsappRequired")),
     guardianWhatsapp: z.string().optional(),
+    password: z.string().min(6, v("passwordMin")),
+    confirmPassword: z.string().min(1, v("confirmPasswordRequired")),
   });
+
+  const step1 = step1Base.superRefine((data, ctx) =>
+    applyPasswordMatch(data, ctx, v)
+  );
 
   const step2 = z.object(addressFields(v));
 
@@ -149,7 +169,7 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     path: ["termsAccepted"],
   });
 
-  const full = step1
+  const full = step1Base
     .merge(step2)
     .merge(step3)
     .merge(step4)
@@ -157,6 +177,7 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     .merge(step6Base)
     .superRefine((data, ctx) => {
       applyAdmissionFeeRefinement(data, ctx);
+      applyPasswordMatch(data, ctx, v);
 
       if (!data.termsAccepted) {
         ctx.addIssue({
@@ -195,6 +216,8 @@ export const STUDENT_ADMISSION_STEPS = [
       "gender",
       "email",
       "whatsapp",
+      "password",
+      "confirmPassword",
     ],
   },
   {

@@ -71,6 +71,10 @@ export function StudentStepReview() {
         value: values.gender ? lookupLabel(genderOptions, values.gender) : "",
       },
       { label: t("review.email"), value: values.email ?? "" },
+      {
+        label: t("review.password"),
+        value: values.password ? t("review.passwordSet") : "",
+      },
       { label: t("review.whatsapp"), value: values.whatsapp ?? "" },
       {
         label: t("review.currentAddress"),

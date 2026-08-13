@@ -120,14 +120,15 @@ export function TeacherRegistrationWizard() {
       }
       formData.append("certificateFile", data.certificateFile);
 
-      const fileKeys = new Set([
+      const omitKeys = new Set([
         "cvFile",
         "profilePhotoFile",
         "screenshotFile",
         "certificateFile",
+        "confirmPassword",
       ]);
       const rest = Object.fromEntries(
-        Object.entries(data).filter(([key]) => !fileKeys.has(key))
+        Object.entries(data).filter(([key]) => !omitKeys.has(key))
       );
 
       formData.append(

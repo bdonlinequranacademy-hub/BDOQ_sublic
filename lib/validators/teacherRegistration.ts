@@ -52,6 +52,20 @@ function addressFields(v: FormValidationFn) {
   };
 }
 
+function applyPasswordMatch(
+  data: { password: string; confirmPassword: string },
+  ctx: z.RefinementCtx,
+  v: FormValidationFn
+): void {
+  if (data.password !== data.confirmPassword) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: v("passwordMismatch"),
+      path: ["confirmPassword"],
+    });
+  }
+}
+
 function applyHafizRefinement<
   T extends { isHafiz: "yes" | "no"; parasMemorized?: string },
 >(data: T, ctx: z.RefinementCtx, v: FormValidationFn): void {
@@ -70,7 +84,7 @@ export function createTeacherRegistrationSchemas(v: FormValidationFn) {
     .refine((file) => file.size <= 5 * 1024 * 1024, v("imageSize5mb"))
     .refine((file) => file.type.startsWith("image/"), v("imageType"));
 
-  const step1 = z.object({
+  const step1Base = z.object({
     fullName: z.string().min(2, v("fullNameRequired")),
     fatherName: z.string().min(2, v("fatherNameRequired")),
     surname: z.string().optional(),
@@ -80,8 +94,14 @@ export function createTeacherRegistrationSchemas(v: FormValidationFn) {
     email: z.string().email(v("emailRequired")),
     phone: z.string().min(10, v("phoneRequired")),
     whatsapp: z.string().min(10, v("whatsappRequired")),
+    password: z.string().min(6, v("passwordMin")),
+    confirmPassword: z.string().min(1, v("confirmPasswordRequired")),
     ...addressFields(v),
   });
+
+  const step1 = step1Base.superRefine((data, ctx) =>
+    applyPasswordMatch(data, ctx, v)
+  );
 
   const step2Base = z.object({
     educationQualification: z.string().min(2, v("educationRequired")),
@@ -121,12 +141,15 @@ export function createTeacherRegistrationSchemas(v: FormValidationFn) {
     }),
   });
 
-  const full = step1
+  const full = step1Base
     .merge(step2Base)
     .merge(step3)
     .merge(step4)
     .merge(step5)
-    .superRefine((data, ctx) => applyHafizRefinement(data, ctx, v));
+    .superRefine((data, ctx) => {
+      applyHafizRefinement(data, ctx, v);
+      applyPasswordMatch(data, ctx, v);
+    });
 
   return {
     step1,
@@ -158,6 +181,8 @@ export const TEACHER_REGISTRATION_STEPS = [
       "email",
       "phone",
       "whatsapp",
+      "password",
+      "confirmPassword",
       "currentAddressLine1",
       "currentCity",
       "currentDistrict",

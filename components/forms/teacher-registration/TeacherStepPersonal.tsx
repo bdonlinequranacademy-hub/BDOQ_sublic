@@ -185,6 +185,49 @@ export function TeacherStepPersonal() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <BilingualLabel
+            htmlFor="password"
+            labelBn="পাসওয়ার্ড"
+            labelEn="Password"
+            required
+          />
+          <input
+            id="password"
+            type="password"
+            autoComplete="new-password"
+            className={formInputClass}
+            {...register("password")}
+          />
+          <p className="mt-1 font-body text-xs text-text-gray">
+            অনুমোদনের পর এই পাসওয়ার্ড দিয়ে পোর্টালে লগইন করবেন। / You will use
+            this password to sign in after approval.
+          </p>
+          {errors.password && (
+            <p className={formErrorClass}>{errors.password.message}</p>
+          )}
+        </div>
+        <div>
+          <BilingualLabel
+            htmlFor="confirmPassword"
+            labelBn="পাসওয়ার্ড নিশ্চিত করুন"
+            labelEn="Confirm password"
+            required
+          />
+          <input
+            id="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+            className={formInputClass}
+            {...register("confirmPassword")}
+          />
+          {errors.confirmPassword && (
+            <p className={formErrorClass}>{errors.confirmPassword.message}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="grid gap-5 sm:grid-cols-2">
         <div className="min-w-0">
           <BilingualLabel
             htmlFor="phone"
