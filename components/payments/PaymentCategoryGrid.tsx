@@ -10,7 +10,6 @@ import {
   Wallet,
   ArrowRight,
 } from "lucide-react";
-import { PORTAL_BASE_URL } from "@/lib/navigation";
 import { PUBLIC_PAYMENT_CARDS } from "@/lib/optionalPayments";
 
 const CARD_ICONS = {
@@ -27,7 +26,6 @@ type CardId = (typeof PUBLIC_PAYMENT_CARDS)[number]["id"];
 
 export async function PaymentCategoryGrid() {
   const t = await getTranslations("pages.payments");
-  const monthlyHref = `${PORTAL_BASE_URL}/student/payments`;
 
   return (
     <div>
@@ -41,42 +39,12 @@ export async function PaymentCategoryGrid() {
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {PUBLIC_PAYMENT_CARDS.map((card) => {
           const Icon = CARD_ICONS[card.id as CardId];
-          const href =
-            card.kind === "portal" ? monthlyHref : card.href;
-          const cta =
-            card.kind === "link"
-              ? t("goToAdmission")
-              : card.kind === "portal"
-                ? t("goToMonthly")
-                : t("goToForm");
-          const className =
-            "group flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl";
-
-          if (card.kind === "portal") {
-            return (
-              <a key={card.id} href={href} className={className}>
-                <span className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <Icon className="size-6" aria-hidden="true" />
-                </span>
-                <h3 className="mt-4 font-inter text-lg font-semibold text-primary-dark">
-                  {t(`cards.${card.id}.title`)}
-                </h3>
-                <p className="mt-2 flex-1 font-body text-sm leading-relaxed text-text-gray">
-                  {t(`cards.${card.id}.description`)}
-                </p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
-                  {cta}
-                  <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
-                </span>
-              </a>
-            );
-          }
 
           return (
             <Link
               key={card.id}
-              href={href}
-              className={className}
+              href={card.href}
+              className="group flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <span className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                 <Icon className="size-6" aria-hidden="true" />
@@ -88,7 +56,7 @@ export async function PaymentCategoryGrid() {
                 {t(`cards.${card.id}.description`)}
               </p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
-                {cta}
+                {t("goToForm")}
                 <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
               </span>
             </Link>

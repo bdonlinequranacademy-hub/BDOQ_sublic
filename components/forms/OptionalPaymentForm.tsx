@@ -9,9 +9,10 @@ import { API_BASE } from "@/lib/constants";
 import { useFormValidation } from "@/lib/i18n/useFormValidation";
 import {
   OPTIONAL_PAYMENT_ACCOUNTS,
-  OPTIONAL_PAYMENT_CATEGORIES,
   OPTIONAL_PAYMENT_METHODS,
-  type OptionalPaymentCategoryType,
+  PUBLIC_PAYMENT_CATEGORIES,
+  isAcademyFeeCategory,
+  isPublicPaymentCategory,
 } from "@/lib/optionalPayments";
 import {
   createOptionalPaymentSchema,
@@ -28,13 +29,6 @@ import {
 } from "@/components/forms/shared/formStyles";
 import { cn } from "@/lib/cn";
 
-function isOptionalCategory(value: string | null): value is OptionalPaymentCategoryType {
-  return Boolean(
-    value &&
-      (OPTIONAL_PAYMENT_CATEGORIES as readonly string[]).includes(value)
-  );
-}
-
 export function OptionalPaymentForm() {
   const locale = useLocale();
   const t = useTranslations("pages.payments");
@@ -46,13 +40,14 @@ export function OptionalPaymentForm() {
   );
 
   const requestedCategory = searchParams.get("category");
-  const defaultCategory = isOptionalCategory(requestedCategory)
+  const defaultCategory = isPublicPaymentCategory(requestedCategory)
     ? requestedCategory
     : "sadaqah";
 
   const [submitState, setSubmitState] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [submitError, setSubmitError] = useState("");
 
   const {
     register,
@@ -79,13 +74,14 @@ export function OptionalPaymentForm() {
   });
 
   useEffect(() => {
-    if (isOptionalCategory(requestedCategory)) {
+    if (isPublicPaymentCategory(requestedCategory)) {
       setValue("category", requestedCategory, { shouldValidate: true });
     }
   }, [requestedCategory, setValue]);
 
   const method = useWatch({ control, name: "method" });
   const category = useWatch({ control, name: "category" });
+  const feeCategory = isAcademyFeeCategory(category ?? "");
 
   const instructionLines = useMemo(() => {
     if (method === "bank") {
@@ -112,6 +108,7 @@ export function OptionalPaymentForm() {
   const onSubmit = async (data: OptionalPaymentFormValues): Promise<void> => {
     if (!(data.screenshot instanceof File)) return;
     setSubmitState("loading");
+    setSubmitError("");
     try {
       const formData = new FormData();
       formData.append("category", data.category);
@@ -132,7 +129,14 @@ export function OptionalPaymentForm() {
         body: formData,
         cache: "no-store",
       });
-      if (!response.ok) throw new Error("Failed");
+      const payload = (await response.json().catch(() => null)) as {
+        message?: string;
+      } | null;
+      if (!response.ok) {
+        setSubmitError(payload?.message?.trim() || t("error"));
+        setSubmitState("error");
+        return;
+      }
       setSubmitState("success");
       reset({
         category: data.category,
@@ -148,6 +152,7 @@ export function OptionalPaymentForm() {
         screenshot: null,
       });
     } catch {
+      setSubmitError(t("error"));
       setSubmitState("error");
     }
   };
@@ -161,13 +166,15 @@ export function OptionalPaymentForm() {
         {t("formTitle")}
       </h2>
       <p className="mt-1 font-body text-sm text-text-gray">{t("formHint")}</p>
-      <p className="mt-3 font-body text-xs text-text-gray">{t("monthlyHint")}</p>
+      {feeCategory ? (
+        <p className="mt-3 font-body text-xs text-text-gray">{t("feeMatchHint")}</p>
+      ) : null}
 
       {submitState === "success" && (
         <FormAlert type="success" message={t("success")} className="mt-5" />
       )}
       {submitState === "error" && (
-        <FormAlert type="error" message={t("error")} className="mt-5" />
+        <FormAlert type="error" message={submitError || t("error")} className="mt-5" />
       )}
 
       {instructionLines.length > 0 ? (
@@ -193,7 +200,7 @@ export function OptionalPaymentForm() {
             className={formInputClass}
             {...register("category")}
           >
-            {OPTIONAL_PAYMENT_CATEGORIES.map((item) => (
+            {PUBLIC_PAYMENT_CATEGORIES.map((item) => (
               <option key={item} value={item}>
                 {t(`cards.${item}.title`)}
               </option>
@@ -238,7 +245,7 @@ export function OptionalPaymentForm() {
 
         <div>
           <label htmlFor="optional-whatsapp" className={formLabelClass}>
-            {t("whatsapp")}
+            {feeCategory ? t("whatsappRequired") : t("whatsapp")}
           </label>
           <input
             id="optional-whatsapp"
@@ -248,6 +255,10 @@ export function OptionalPaymentForm() {
           />
           {errors.whatsapp ? (
             <p className={formErrorClass}>{errors.whatsapp.message}</p>
+          ) : feeCategory ? (
+            <p className="mt-1 font-body text-xs text-text-gray">
+              {t("whatsappFeeHint")}
+            </p>
           ) : null}
         </div>
 

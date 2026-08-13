@@ -1,15 +1,16 @@
 import { z } from "zod";
 import {
-  OPTIONAL_PAYMENT_CATEGORIES,
   OPTIONAL_PAYMENT_CURRENCIES,
   OPTIONAL_PAYMENT_METHODS,
+  PUBLIC_PAYMENT_CATEGORIES,
+  isAcademyFeeCategory,
 } from "@/lib/optionalPayments";
 import type { FormValidationFn } from "@/lib/validators/freeClass";
 
 export function createOptionalPaymentSchema(v: FormValidationFn) {
   return z
     .object({
-      category: z.enum(OPTIONAL_PAYMENT_CATEGORIES, {
+      category: z.enum(PUBLIC_PAYMENT_CATEGORIES, {
         message: v("optionalPaymentCategoryRequired"),
       }),
       customLabel: z.string().optional(),
@@ -38,6 +39,17 @@ export function createOptionalPaymentSchema(v: FormValidationFn) {
           path: ["customLabel"],
           message: v("optionalPaymentCustomLabelRequired"),
         });
+      }
+
+      if (isAcademyFeeCategory(data.category)) {
+        const digits = (data.whatsapp ?? "").replace(/\D/g, "");
+        if (digits.length < 10) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["whatsapp"],
+            message: v("optionalPaymentWhatsAppRequired"),
+          });
+        }
       }
 
       if (!(data.screenshot instanceof File)) {

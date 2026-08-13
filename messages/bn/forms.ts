@@ -403,6 +403,8 @@ export const formsMessages = {
     optionalPaymentDateRequired: "পেমেন্টের তারিখ প্রয়োজন",
     optionalPaymentCustomLabelRequired: "এই কাস্টম পেমেন্টের বিবরণ লিখুন",
     optionalPaymentScreenshotRequired: "পেমেন্ট স্ক্রিনশট আপলোড করুন",
+    optionalPaymentWhatsAppRequired:
+      "ভর্তি ফি ও মাসিক টিউশনের জন্য WhatsApp প্রয়োজন — শিক্ষার্থী মিলাতে পারি",
   },
   teacherRules: {
     rule1:

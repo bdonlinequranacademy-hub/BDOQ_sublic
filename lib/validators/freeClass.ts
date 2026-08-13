@@ -87,7 +87,8 @@ export type FormValidationKey =
   | "optionalPaymentReferenceRequired"
   | "optionalPaymentDateRequired"
   | "optionalPaymentCustomLabelRequired"
-  | "optionalPaymentScreenshotRequired";
+  | "optionalPaymentScreenshotRequired"
+  | "optionalPaymentWhatsAppRequired";
 
 export type FormValidationFn = (key: FormValidationKey) => string;
 

@@ -1,3 +1,8 @@
+export const ACADEMY_FEE_CATEGORIES = [
+  "admission_fee",
+  "monthly_tuition",
+] as const;
+
 export const OPTIONAL_PAYMENT_CATEGORIES = [
   "teacher_bakhshish",
   "eid_gift",
@@ -6,8 +11,16 @@ export const OPTIONAL_PAYMENT_CATEGORIES = [
   "custom",
 ] as const;
 
+export const PUBLIC_PAYMENT_CATEGORIES = [
+  ...ACADEMY_FEE_CATEGORIES,
+  ...OPTIONAL_PAYMENT_CATEGORIES,
+] as const;
+
+export type AcademyFeeCategoryType = (typeof ACADEMY_FEE_CATEGORIES)[number];
 export type OptionalPaymentCategoryType =
   (typeof OPTIONAL_PAYMENT_CATEGORIES)[number];
+export type PublicPaymentCategoryType =
+  (typeof PUBLIC_PAYMENT_CATEGORIES)[number];
 
 export const OPTIONAL_PAYMENT_METHODS = [
   "bkash",
@@ -35,40 +48,21 @@ export const OPTIONAL_PAYMENT_ACCOUNTS = {
   },
 } as const;
 
-export const PUBLIC_PAYMENT_CARDS = [
-  {
-    id: "admission_fee",
-    href: "/student-admission",
-    kind: "link",
-  },
-  {
-    id: "monthly_tuition",
-    href: "/payments#monthly-tuition",
-    kind: "portal",
-  },
-  {
-    id: "teacher_bakhshish",
-    href: "/payments?category=teacher_bakhshish#pay-form",
-    kind: "form",
-  },
-  {
-    id: "eid_gift",
-    href: "/payments?category=eid_gift#pay-form",
-    kind: "form",
-  },
-  {
-    id: "sponsor_student",
-    href: "/payments?category=sponsor_student#pay-form",
-    kind: "form",
-  },
-  {
-    id: "sadaqah",
-    href: "/payments?category=sadaqah#pay-form",
-    kind: "form",
-  },
-  {
-    id: "custom",
-    href: "/payments?category=custom#pay-form",
-    kind: "form",
-  },
-] as const;
+export const PUBLIC_PAYMENT_CARDS = PUBLIC_PAYMENT_CATEGORIES.map((id) => ({
+  id,
+  href: `/payments?category=${id}#pay-form`,
+}));
+
+export function isAcademyFeeCategory(
+  value: string
+): value is AcademyFeeCategoryType {
+  return (ACADEMY_FEE_CATEGORIES as readonly string[]).includes(value);
+}
+
+export function isPublicPaymentCategory(
+  value: string | null
+): value is PublicPaymentCategoryType {
+  return Boolean(
+    value && (PUBLIC_PAYMENT_CATEGORIES as readonly string[]).includes(value)
+  );
+}

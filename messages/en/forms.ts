@@ -401,6 +401,8 @@ export const formsMessages = {
     optionalPaymentDateRequired: "Payment date is required",
     optionalPaymentCustomLabelRequired: "Describe this custom payment",
     optionalPaymentScreenshotRequired: "Upload your payment screenshot",
+    optionalPaymentWhatsAppRequired:
+      "WhatsApp is required for admission fee and monthly tuition so we can match the student",
   },
   teacherRules: {
     rule1:

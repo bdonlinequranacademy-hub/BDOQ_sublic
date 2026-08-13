@@ -204,25 +204,30 @@ export const pagesMessages = {
     bookTrial: "Book a free trial class",
   },
   payments: {
-    eyebrow: "Optional payments",
+    eyebrow: "Payments",
     title: "Payments & Gifts",
     subtitle:
-      "Pay admission or monthly tuition through the existing academy flow, or send an optional gift, sadaqah, or custom payment. Nothing here is required unless you choose it.",
+      "Pay admission fee or monthly tuition from this page, or send an optional gift, sadaqah, or custom payment. Gifts are never required.",
     optionalNote:
       "Gifts, Eid salami, sponsorship, and sadaqah are completely optional. JazakAllahu khairan for supporting BDOQ Academy.",
     categoriesTitle: "Choose a category",
     categoriesSubtitle:
-      "Admission fee and monthly tuition use the current student processes. The other options go to this page’s optional payment form.",
+      "Admission fee and monthly tuition are recorded in the existing student systems. Gifts stay on the optional payments list.",
     methodsTitle: "Accepted methods",
     methodsSubtitle:
       "Send money to the academy wallet, then upload your screenshot so admin can verify who paid.",
-    formTitle: "Submit optional payment proof",
+    formTitle: "Submit payment proof",
     formHint:
       "After you pay by bKash, Nagad, Rocket, or bank transfer, fill this form. Admin will review the screenshot.",
+    feeMatchHint:
+      "For admission fee or monthly tuition, use the student or guardian WhatsApp from the admission form / portal so we can match the payment.",
     payerName: "Full name",
     payerNamePlaceholder: "Your full name",
     whatsapp: "WhatsApp (optional)",
+    whatsappRequired: "WhatsApp (required)",
     whatsappPlaceholder: "+880 1XXX-XXXXXX",
+    whatsappFeeHint:
+      "Use the number from the student admission form or student portal.",
     category: "Category",
     customLabel: "Custom payment title",
     customLabelPlaceholder: "e.g. Teacher gift for Ramadan",
@@ -240,20 +245,16 @@ export const pagesMessages = {
       "JazakAllahu khairan — your proof was received. Our team will review it shortly.",
     error: "Could not submit. Please try again or contact us on WhatsApp.",
     goToForm: "Continue to form",
-    goToAdmission: "Open admission form",
-    goToMonthly: "Open student portal payments",
-    monthlyHint:
-      "Monthly Quran tuition is paid from the student portal after login. Admission fee is paid on the student admission form.",
     cards: {
       admission_fee: {
         title: "Admission Fee",
         description:
-          "One-time enrollment fee. Use the existing student admission form — do not pay it here.",
+          "One-time enrollment fee. Pay here and it will be added to the existing admission application.",
       },
       monthly_tuition: {
         title: "Monthly Quran Learning Tuition",
         description:
-          "Recurring class fee. Log in to the student portal Payments page to submit monthly tuition.",
+          "Recurring class fee. Pay here and it will appear in Admin Payments and the student portal.",
       },
       teacher_bakhshish: {
         title: "Teacher Bakhshish / Gift",
