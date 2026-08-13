@@ -128,17 +128,12 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     admissionPaymentSender: z.string().optional(),
     admissionPaymentNote: z.string().optional(),
     admissionPaymentProofFile: proofSchema,
-    payCurrentMonthTuition: z.boolean(),
-    monthlyTuitionAmount: z.string().optional(),
   });
 
   const applyAdmissionFeeRefinement = (
     data: Pick<
       z.infer<typeof step5Base>,
-      | "admissionFeeAmount"
-      | "admissionFeeCurrency"
-      | "payCurrentMonthTuition"
-      | "monthlyTuitionAmount"
+      "admissionFeeAmount" | "admissionFeeCurrency"
     >,
     ctx: z.RefinementCtx
   ): void => {
@@ -161,26 +156,73 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
         path: ["admissionFeeAmount"],
       });
     }
-
-    if (data.payCurrentMonthTuition) {
-      const monthly = Number(data.monthlyTuitionAmount);
-      if (!Number.isFinite(monthly) || monthly <= 0) {
-        ctx.addIssue({
-          code: "custom",
-          message: v("monthlyTuitionInvalid"),
-          path: ["monthlyTuitionAmount"],
-        });
-      }
-    }
   };
 
   const step5 = step5Base.superRefine(applyAdmissionFeeRefinement);
 
   const step6Base = z.object({
+    monthlyTuitionChoice: z.enum(["yes", "no"], {
+      message: v("monthlyChoiceRequired"),
+    }),
+    payCurrentMonthTuition: z.boolean(),
+    monthlyTuitionAmount: z.string().optional(),
+    monthlyTuitionPaymentMethod: z.string().optional(),
+    monthlyTuitionReference: z.string().optional(),
+    monthlyTuitionDate: z.string().optional(),
+    monthlyTuitionProofFile: proofSchema.optional().nullable(),
+  });
+
+  const applyMonthlyTuitionRefinement = (
+    data: z.infer<typeof step6Base>,
+    ctx: z.RefinementCtx
+  ): void => {
+    if (data.monthlyTuitionChoice !== "yes") return;
+
+    const monthly = Number(data.monthlyTuitionAmount);
+    if (!Number.isFinite(monthly) || monthly <= 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: v("monthlyTuitionInvalid"),
+        path: ["monthlyTuitionAmount"],
+      });
+    }
+    if (!data.monthlyTuitionPaymentMethod?.trim()) {
+      ctx.addIssue({
+        code: "custom",
+        message: v("admissionPaymentRequired"),
+        path: ["monthlyTuitionPaymentMethod"],
+      });
+    }
+    if (!data.monthlyTuitionReference?.trim()) {
+      ctx.addIssue({
+        code: "custom",
+        message: v("admissionReferenceRequired"),
+        path: ["monthlyTuitionReference"],
+      });
+    }
+    if (!data.monthlyTuitionDate?.trim()) {
+      ctx.addIssue({
+        code: "custom",
+        message: v("admissionDateRequired"),
+        path: ["monthlyTuitionDate"],
+      });
+    }
+    if (!(data.monthlyTuitionProofFile instanceof File)) {
+      ctx.addIssue({
+        code: "custom",
+        message: v("imageRequired"),
+        path: ["monthlyTuitionProofFile"],
+      });
+    }
+  };
+
+  const step6 = step6Base.superRefine(applyMonthlyTuitionRefinement);
+
+  const step7Base = z.object({
     termsAccepted: z.boolean(),
   });
 
-  const step6 = step6Base.refine((data) => data.termsAccepted === true, {
+  const step7 = step7Base.refine((data) => data.termsAccepted === true, {
     message: v("termsRequired"),
     path: ["termsAccepted"],
   });
@@ -191,8 +233,10 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     .merge(step4)
     .merge(step5Base)
     .merge(step6Base)
+    .merge(step7Base)
     .superRefine((data, ctx) => {
       applyAdmissionFeeRefinement(data, ctx);
+      applyMonthlyTuitionRefinement(data, ctx);
       applyPasswordMatch(data, ctx, v);
 
       if (!data.termsAccepted) {
@@ -211,8 +255,9 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     step4,
     step5,
     step6,
+    step7,
     full,
-    steps: [step1, step2, step3, step4, step5, step6] as const,
+    steps: [step1, step2, step3, step4, step5, step6, step7] as const,
   };
 }
 
@@ -297,8 +342,16 @@ export const STUDENT_ADMISSION_STEPS = [
       "admissionPaymentReference",
       "admissionPaymentDate",
       "admissionPaymentProofFile",
-      "payCurrentMonthTuition",
+    ],
+  },
+  {
+    id: "monthlyTuition",
+    titleBn: "চলতি মাসের টিউশন",
+    titleEn: "This Month’s Tuition",
+    fields: [
+      "monthlyTuitionChoice",
       "monthlyTuitionAmount",
+      "monthlyTuitionProofFile",
     ],
   },
   {

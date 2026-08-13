@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { BilingualLabel } from "@/components/forms/shared/BilingualLabel";
@@ -14,23 +14,10 @@ import {
   ADMISSION_FEE,
   ADMISSION_PAYMENT_ACCOUNTS,
   ACADEMY_INFO,
-  PACKAGES,
   WHATSAPP_URL,
 } from "@/lib/constants";
 import { usePaymentSelectOptions } from "@/lib/i18n/useFormSelectOptions";
 import type { StudentAdmissionFormValues } from "@/lib/validators/studentAdmission";
-import { cn } from "@/lib/cn";
-
-function monthlyTuitionForPlan(
-  plan: string | undefined,
-  currency: "bdt" | "usd"
-): number {
-  const match = PACKAGES.find(
-    (pkg) => pkg.name.toLowerCase() === (plan ?? "").toLowerCase()
-  );
-  if (!match) return currency === "usd" ? 35 : 3000;
-  return match.price[currency];
-}
 
 export function StudentStepAdmissionFee() {
   const t = useTranslations("forms.studentAdmission.admissionFee");
@@ -44,8 +31,6 @@ export function StudentStepAdmissionFee() {
 
   const currency = useWatch({ control, name: "admissionFeeCurrency" }) ?? "bdt";
   const paymentMethod = useWatch({ control, name: "admissionFeePaymentMethod" });
-  const packagePlan = useWatch({ control, name: "packagePlan" });
-  const payCurrentMonth = useWatch({ control, name: "payCurrentMonthTuition" });
 
   const expectedAmount = ADMISSION_FEE[currency === "usd" ? "usd" : "bdt"];
   const amountLabel =
@@ -99,20 +84,6 @@ export function StudentStepAdmissionFee() {
     }
   }, [amountLabel, paymentMethod, t]);
 
-  const monthlyExpected = monthlyTuitionForPlan(
-    packagePlan,
-    currency === "usd" ? "usd" : "bdt"
-  );
-  const monthlyLabel =
-    currency === "usd" ? `$${monthlyExpected} USD` : `৳${monthlyExpected} BDT`;
-
-  useEffect(() => {
-    if (!payCurrentMonth) return;
-    setValue("monthlyTuitionAmount", String(monthlyExpected), {
-      shouldValidate: true,
-    });
-  }, [monthlyExpected, payCurrentMonth, setValue]);
-
   const handleCurrencyChange = (next: "bdt" | "usd"): void => {
     setValue("admissionFeeCurrency", next, { shouldValidate: true });
     setValue(
@@ -120,13 +91,6 @@ export function StudentStepAdmissionFee() {
       String(ADMISSION_FEE[next === "usd" ? "usd" : "bdt"]),
       { shouldValidate: true }
     );
-    if (payCurrentMonth) {
-      setValue(
-        "monthlyTuitionAmount",
-        String(monthlyTuitionForPlan(packagePlan, next)),
-        { shouldValidate: true }
-      );
-    }
   };
 
   return (
@@ -323,51 +287,6 @@ export function StudentStepAdmissionFee() {
       />
 
       <p className="font-body text-xs text-text-gray">{t("proofHint")}</p>
-
-      <div className="rounded-2xl border border-teal-200 bg-teal-50/70 p-5">
-        <h3 className="font-inter text-base font-semibold text-primary-dark">
-          {t("monthlyTitle")}
-        </h3>
-        <p className="mt-2 font-body text-sm leading-relaxed text-text-dark">
-          {t("monthlyIntro")}
-        </p>
-        <label className="mt-4 flex min-h-[44px] cursor-pointer items-start gap-3 rounded-xl border border-teal-200 bg-white px-4 py-3">
-          <input
-            type="checkbox"
-            className="mt-1 size-4 accent-primary"
-            {...register("payCurrentMonthTuition")}
-          />
-          <span className="font-body text-sm text-text-dark">
-            {t("monthlyCheckbox")}
-          </span>
-        </label>
-        {payCurrentMonth ? (
-          <div className={cn("mt-4")}>
-            <BilingualLabel
-              htmlFor="monthlyTuitionAmount"
-              labelBn="চলতি মাসের টিউশন"
-              labelEn="This month’s tuition paid"
-              required
-            />
-            <input
-              id="monthlyTuitionAmount"
-              type="number"
-              min={1}
-              step="0.01"
-              className={formInputClass}
-              {...register("monthlyTuitionAmount")}
-            />
-            <p className="mt-1 font-body text-xs text-text-gray">
-              {t("monthlyHint")} ({monthlyLabel})
-            </p>
-            {errors.monthlyTuitionAmount && (
-              <p className={formErrorClass}>
-                {errors.monthlyTuitionAmount.message}
-              </p>
-            )}
-          </div>
-        ) : null}
-      </div>
     </div>
   );
 }

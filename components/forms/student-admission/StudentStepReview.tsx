@@ -186,16 +186,24 @@ export function StudentStepReview() {
         value: values.admissionPaymentDate ?? "",
       },
       {
-        label: t("review.monthlyTuition"),
-        value: values.payCurrentMonthTuition
-          ? `${values.monthlyTuitionAmount ?? ""} ${(values.admissionFeeCurrency ?? "bdt").toUpperCase()}`
-          : t("review.monthlyTuitionNo"),
-      },
-      {
         label: t("review.admissionProof"),
         value: values.admissionPaymentProofFile
           ? values.admissionPaymentProofFile.name
           : "",
+      },
+      {
+        label: t("review.monthlyTuition"),
+        value:
+          values.monthlyTuitionChoice === "yes"
+            ? `${values.monthlyTuitionAmount ?? ""} ${(values.admissionFeeCurrency ?? "bdt").toUpperCase()}`
+            : t("review.monthlyTuitionNo"),
+      },
+      {
+        label: t("review.monthlyTuitionProof"),
+        value:
+          values.monthlyTuitionChoice === "yes" && values.monthlyTuitionProofFile
+            ? values.monthlyTuitionProofFile.name
+            : "",
       },
       { label: t("review.parentName"), value: values.parentName ?? "" },
       {

@@ -24,6 +24,7 @@ import { StudentStepGuardian } from "@/components/forms/student-admission/Studen
 import { StudentStepLearning } from "@/components/forms/student-admission/StudentStepLearning";
 import { StudentStepPersonal } from "@/components/forms/student-admission/StudentStepPersonal";
 import { StudentStepAdmissionFee } from "@/components/forms/student-admission/StudentStepAdmissionFee";
+import { StudentStepMonthlyTuition } from "@/components/forms/student-admission/StudentStepMonthlyTuition";
 import { StudentStepReview } from "@/components/forms/student-admission/StudentStepReview";
 import { ADMISSION_FEE } from "@/lib/constants";
 
@@ -33,6 +34,7 @@ const STEP_COMPONENTS = [
   StudentStepLearning,
   StudentStepGuardian,
   StudentStepAdmissionFee,
+  StudentStepMonthlyTuition,
   StudentStepReview,
 ] as const;
 
@@ -81,12 +83,17 @@ export function StudentAdmissionWizard() {
       admissionFeeAmount: String(ADMISSION_FEE.bdt),
       payCurrentMonthTuition: false,
       monthlyTuitionAmount: "",
+      monthlyTuitionPaymentMethod: "",
+      monthlyTuitionReference: "",
+      monthlyTuitionDate: "",
       termsAccepted: false,
     },
     mode: "onTouched",
   });
 
-  const { handleSubmit, getValues, setError, clearErrors, reset } = methods;
+  const { handleSubmit, getValues, setError, clearErrors, reset, watch } =
+    methods;
+  const monthlyChoice = watch("monthlyTuitionChoice");
 
   useEffect(() => {
     if (!prefillParam) return;
@@ -113,6 +120,12 @@ export function StudentAdmissionWizard() {
           : [],
         termsAccepted: false,
         payCurrentMonthTuition: Boolean(prefill.payCurrentMonthTuition),
+        monthlyTuitionChoice:
+          prefill.monthlyTuitionChoice === "yes" || prefill.payCurrentMonthTuition
+            ? "yes"
+            : prefill.monthlyTuitionChoice === "no"
+              ? "no"
+              : undefined,
       });
       setPrefillToken(result.prefillToken);
       setPrefillLoaded(true);
@@ -204,8 +217,15 @@ export function StudentAdmissionWizard() {
           data.admissionPaymentProofFile
         );
       }
+      if (data.monthlyTuitionChoice === "yes" && data.monthlyTuitionProofFile) {
+        formData.append("monthlyTuitionProof", data.monthlyTuitionProofFile);
+      }
 
-      const omitKeys = new Set(["admissionPaymentProofFile", "confirmPassword"]);
+      const omitKeys = new Set([
+        "admissionPaymentProofFile",
+        "monthlyTuitionProofFile",
+        "confirmPassword",
+      ]);
       const rest = Object.fromEntries(
         Object.entries(data).filter(([key]) => !omitKeys.has(key))
       );
@@ -214,6 +234,7 @@ export function StudentAdmissionWizard() {
         "data",
         JSON.stringify({
           ...rest,
+          payCurrentMonthTuition: data.monthlyTuitionChoice === "yes",
           locale,
           ...(prefillToken ? { prefillToken } : {}),
         })
@@ -294,6 +315,11 @@ export function StudentAdmissionWizard() {
           onBack={handleBack}
           onNext={handleWizardNext}
           isSubmitting={submitState === "loading"}
+          nextLabel={
+            currentStep === 5 && monthlyChoice === "no"
+              ? t("skipMonthly")
+              : undefined
+          }
           submitLabel={t("submit")}
         >
           <StepComponent />

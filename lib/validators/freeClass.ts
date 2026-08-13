@@ -44,6 +44,7 @@ export type FormValidationKey =
   | "admissionDateRequired"
   | "monthlyTuitionRequired"
   | "monthlyTuitionInvalid"
+  | "monthlyChoiceRequired"
   | "parentNameRequired"
   | "relationshipRequired"
   | "parentWhatsappRequired"

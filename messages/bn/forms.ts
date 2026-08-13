@@ -184,14 +184,6 @@ export const formsMessages = {
       proofLabel: "পেমেন্ট স্ক্রিনশট আপলোড (আবশ্যক)",
       proofHint:
         "স্ক্রিনশটে পরিমাণ, তারিখ ও ট্রানজেকশন ID স্পষ্ট দেখাতে হবে। JPG/PNG, সর্বোচ্চ ৫MB।",
-      monthlyTitle: "ঐচ্ছিক: চলতি মাসের টিউশন অগ্রিম পরিশোধ",
-      monthlyIntro:
-        "ভর্তি ফি একবারই দিতে হয়। চলতি মাসের মাসিক টিউশনও এখন দিতে চাইলে নিচের অপশনটি সিলেক্ট করুন। সেই মাসিক পেমেন্ট স্টুডেন্ট পোর্টাল ও অ্যাডমিন পেমেন্টসে দেখা যাবে।",
-      monthlyCheckbox:
-        "ভর্তি ফির সাথে চলতি মাসের টিউশনও অগ্রিম পরিশোধ করতে চাই",
-      monthlyAmount: "চলতি মাসের পরিশোধিত টিউশন",
-      monthlyHint:
-        "ভর্তি ফি ও চলতি মাসের টিউশন একসাথে পাঠিয়ে থাকলে একই স্ক্রিনশটই যথেষ্ট। প্রয়োজনে পরিমাণ এডিট করতে পারবেন।",
       instructions: {
         title: "পেমেন্ট নির্দেশনা",
         sendTo: "{method} — {account} নম্বরে পেমেন্ট পাঠান",
@@ -230,9 +222,10 @@ export const formsMessages = {
       admissionPaymentMethod: "ভর্তি ফি পেমেন্ট পদ্ধতি",
       admissionReference: "ট্রানজেকশন রেফারেন্স",
       admissionPaymentDate: "পেমেন্টের তারিখ",
-      admissionProof: "পেমেন্ট প্রমাণ",
+      admissionProof: "ভর্তি ফির স্ক্রিনশট",
       monthlyTuition: "চলতি মাসের টিউশন (অগ্রিম)",
       monthlyTuitionNo: "এখন চলতি মাস দিচ্ছি না",
+      monthlyTuitionProof: "চলতি মাসের টিউশনের স্ক্রিনশট",
       parentName: "অভিভাবকের নাম",
       parentRelationship: "সম্পর্ক",
       parentWhatsapp: "অভিভাবকের WhatsApp",
@@ -252,6 +245,24 @@ export const formsMessages = {
       validationError:
         "সব প্রয়োজনীয় তথ্য পূরণ করুন। যে ধাপে তথ্য বাকি আছে সেখানে নিয়ে যাওয়া হয়েছে।",
       submit: "আবেদন জমা দিন",
+      skipMonthly: "এখন না — পরে দিব",
+    },
+    monthlyTuition: {
+      intro:
+        "ভর্তি ফি একবারই দিতে হয়। এই পাতা শুধু চলতি মাসের ক্লাস ফির জন্য — এখন দিতে চাইলে।",
+      packageAmount: "আপনার প্যাকেজ অনুযায়ী চলতি মাসের টিউশন",
+      hint: "এখন না দিলে পরে স্টুডেন্ট পোর্টাল থেকে দিতে পারবেন।",
+      question: "চলতি মাসের টিউশন এখন দিতে চান?",
+      yesTitle: "হ্যাঁ, আমি দিয়েছি",
+      yesBody: "চলতি মাসের টিউশনের আলাদা স্ক্রিনশট আপলোড করব।",
+      noTitle: "না, এখন না",
+      noBody: "আজ শুধু ভর্তি ফি দিচ্ছি।",
+      detailsTitle: "চলতি মাসের টিউশনের তথ্য",
+      selectMethod: "পেমেন্ট পদ্ধতি নির্বাচন করুন",
+      referencePlaceholder: "যেমন TRX123456789",
+      proofLabel: "চলতি মাসের টিউশনের স্ক্রিনশট আপলোড (আবশ্যক)",
+      proofHint:
+        "ভর্তি ফির স্ক্রিনশট থেকে আলাদা ছবি দিন। JPG/PNG, সর্বোচ্চ ৫MB।",
     },
     prefill: {
       banner:
@@ -344,6 +355,7 @@ export const formsMessages = {
     admissionDateRequired: "পেমেন্টের তারিখ প্রয়োজন",
     monthlyTuitionRequired: "চলতি মাসের টিউশনের পরিমাণ লিখুন",
     monthlyTuitionInvalid: "সঠিক টিউশন পরিমাণ লিখুন",
+    monthlyChoiceRequired: "হ্যাঁ অথবা না বেছে নিন",
     parentNameRequired: "অভিভাবকের নাম প্রয়োজন",
     studentNameRequired: "শিক্ষার্থীর নাম প্রয়োজন",
     trialDateRequired: "ট্রায়াল তারিখ নির্বাচন করুন",
