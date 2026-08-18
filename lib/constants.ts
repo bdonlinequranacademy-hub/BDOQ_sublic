@@ -628,66 +628,8 @@ export {
   FEMALE_TEACHERS,
 } from "./teacherData";
 
-export const TESTIMONIALS: ITestimonial[] = [
-  {
-    id: "testimonial-1",
-    name: "Rahima Khatun",
-    role: "Student",
-    location: "Dhaka, Bangladesh",
-    content:
-      "Alhamdulillah, BD Online Quran Academy has been a blessing for our family. My daughter learns Noorani Qaida one-to-one with a caring female teacher. The class times fit our schedule perfectly.",
-    rating: 5,
-    image: "/images/testimonials/student-1.webp",
-  },
-  {
-    id: "testimonial-2",
-    name: "Ahmed Malik",
-    role: "Student",
-    location: "Los Angeles, America",
-    content:
-      "I enrolled in the Tajweed course while working full-time in the US. BDOQ Academy matched me with an experienced teacher who explains rules clearly in English. The live classes are interactive.",
-    rating: 5,
-    image: "/images/testimonials/student-2.webp",
-  },
-  {
-    id: "testimonial-3",
-    name: "Fatima Begum",
-    role: "Parent",
-    location: "Dhaka, Bangladesh",
-    content:
-      "We chose BDOQ Academy because of their separate system for women and qualified Hafiz teachers. My son is memorizing the Quran with excellent supervision and monthly progress reports.",
-    rating: 5,
-  },
-  {
-    id: "testimonial-4",
-    name: "Arafat Hossain",
-    role: "Student",
-    location: "Los Angeles, America",
-    content:
-      "Fortunately, due to knowing English and having a flexible schedule, I could continue learning Quran under Hafiz teachers. The qualified teachers of BDOQ Academy teach Tajweed excellently from Los Angeles.",
-    rating: 5,
-    image: "/images/testimonials/student-2.webp",
-  },
-  {
-    id: "testimonial-5",
-    name: "Abdullah",
-    role: "Student",
-    location: "Los Angeles, America",
-    content:
-      "I could never have imagined Quran from Bangladesh could be taught to such an international standard. I am confidently memorizing the Quran with a dedicated Hafiz teacher at BDOQ Academy.",
-    rating: 5,
-    image: "/images/testimonials/student-1.webp",
-  },
-  {
-    id: "testimonial-6",
-    name: "Nusrat Fatima",
-    role: "Student",
-    location: "Dhaka, Bangladesh",
-    content:
-      "In our country there are many madrasas, but not everyone has equal opportunities for women to learn. I found a place where women study with qualified female teachers only — that is why I chose BDOQ.",
-    rating: 5,
-  },
-];
+export const TESTIMONIALS: ITestimonial[] = [];
+
 
 export const FAQ_ITEMS: IFAQItem[] = [
   {
