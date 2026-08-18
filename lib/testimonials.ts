@@ -19,7 +19,6 @@ function isHealthyTestimonial(item: ITestimonial): boolean {
   return (
     Boolean(item.name?.trim()) &&
     Boolean(item.content?.trim()) &&
-    item.content.trim().length >= 10 &&
     typeof item.rating === "number" &&
     item.rating >= 1
   );
