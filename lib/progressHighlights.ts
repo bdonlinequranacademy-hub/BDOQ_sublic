@@ -1,6 +1,6 @@
 import { apiFetch } from "./api";
 
-const PROGRESS_REVALIDATE = 300;
+const PROGRESS_REVALIDATE = 0;
 
 export interface IProgressHighlight {
   label: string;

@@ -6,7 +6,7 @@ import {
 } from "./teacherData";
 import type { ICourse, ITeacher } from "./types";
 
-const TEACHERS_REVALIDATE = 3600;
+const TEACHERS_REVALIDATE = 0;
 
 function getStaticTeachers(options?: {
   gender?: "male" | "female";

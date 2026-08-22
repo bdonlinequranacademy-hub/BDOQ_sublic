@@ -4,7 +4,7 @@ import { mapApiBlogToPost, type IApiBlogPost } from "@/lib/i18n/localizeBlog";
 import { STATIC_BLOG_POSTS } from "./constants";
 import type { IBlogPost } from "./types";
 
-const BLOG_REVALIDATE = 300;
+const BLOG_REVALIDATE = 0;
 
 interface IApiBlogListResponse {
   success: boolean;

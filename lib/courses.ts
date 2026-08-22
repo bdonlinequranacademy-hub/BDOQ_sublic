@@ -9,7 +9,7 @@ import type {
   IFAQItem,
 } from "./types";
 
-const COURSES_REVALIDATE = 3600;
+const COURSES_REVALIDATE = 0;
 
 interface IApiCourse extends ICourse {
   detail: ICourseDetail;

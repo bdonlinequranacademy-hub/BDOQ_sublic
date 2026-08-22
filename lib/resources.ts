@@ -16,7 +16,7 @@ import type {
   IVideoItem,
 } from "./types";
 
-const RESOURCES_REVALIDATE = 3600;
+const RESOURCES_REVALIDATE = 0;
 const PLACEHOLDER_VIDEO_ID = "dQw4w9WgXcQ";
 
 function isValidVideoId(youtubeId: string | undefined): boolean {

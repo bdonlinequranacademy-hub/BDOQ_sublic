@@ -1,7 +1,7 @@
 import { apiFetch } from "./api";
 import type { IPremiumHeroCarouselSlide } from "./i18n/usePremiumHeroCarouselSlides";
 
-const HOME_HERO_REVALIDATE = 300;
+const HOME_HERO_REVALIDATE = 0;
 
 interface IApiHomeHeroResponse {
   success: boolean;

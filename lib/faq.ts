@@ -2,7 +2,7 @@ import { apiFetch } from "./api";
 import { FAQ_ITEMS } from "./constants";
 import type { IFAQItem } from "./types";
 
-const FAQ_REVALIDATE = 3600;
+const FAQ_REVALIDATE = 0;
 
 interface IApiFaqResponse {
   success: boolean;

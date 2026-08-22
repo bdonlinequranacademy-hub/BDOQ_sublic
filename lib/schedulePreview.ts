@@ -20,7 +20,7 @@ export async function fetchSchedulePreview(): Promise<{
 }> {
   try {
     const response = await fetch(`${API_BASE}/public/schedule-preview`, {
-      next: { revalidate: 300 },
+      next: { revalidate: 0 },
     });
     if (!response.ok) throw new Error("Failed to fetch schedule preview");
     const json = (await response.json()) as IApiSchedulePreviewResponse;

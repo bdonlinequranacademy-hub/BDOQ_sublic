@@ -2,7 +2,7 @@ import { apiFetch } from "./api";
 import { PACKAGES } from "./constants";
 import type { IPackage } from "./types";
 
-const PRICING_REVALIDATE = 3600;
+const PRICING_REVALIDATE = 0;
 const MIN_HEALTHY_PACKAGES = 2;
 
 interface IApiPackage {

@@ -20,7 +20,7 @@ export async function apiFetch<T>(
 
 export async function checkApiHealth(): Promise<boolean> {
   try {
-    await apiFetch("/health", { next: { revalidate: 60 } });
+    await apiFetch("/health", { next: { revalidate: 0 } });
     return true;
   } catch {
     return false;

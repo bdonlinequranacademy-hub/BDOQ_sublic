@@ -2,7 +2,7 @@ import { apiFetch } from "./api";
 import { GALLERY_ITEMS } from "./constants";
 import type { GalleryAlbumType, GalleryMediaType, IGalleryItem } from "./types";
 
-const GALLERY_REVALIDATE = 3600;
+const GALLERY_REVALIDATE = 0;
 
 interface IApiGalleryResponse {
   success: boolean;

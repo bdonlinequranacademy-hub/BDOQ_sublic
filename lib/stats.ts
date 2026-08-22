@@ -1,7 +1,7 @@
 import { apiFetch } from "./api";
 import { getAcademyYearsExperience } from "./constants";
 
-const STATS_REVALIDATE = 300;
+const STATS_REVALIDATE = 0;
 
 export interface IPublicStats {
   totalTeachingHours: number;

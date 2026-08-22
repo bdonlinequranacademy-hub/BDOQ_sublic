@@ -8,7 +8,7 @@ import type { ITestimonial } from "./types";
  * the cache is never stale for more than 5 minutes even if the
  * webhook call fails.
  */
-const TESTIMONIALS_REVALIDATE = 300; // 5 minutes (safety net)
+const TESTIMONIALS_REVALIDATE = 0; // 5 minutes (safety net)
 
 interface IApiTestimonialsResponse {
   success: boolean;

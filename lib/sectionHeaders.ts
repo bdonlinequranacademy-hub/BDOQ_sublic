@@ -2,7 +2,7 @@ import { apiFetch } from "./api";
 import type { ISectionHeaderContent } from "./types";
 import type { SectionHeaderKey, SectionHeadersMap } from "./sectionHeaderKeys";
 
-const SECTION_HEADERS_REVALIDATE = 3600;
+const SECTION_HEADERS_REVALIDATE = 0;
 
 interface IApiSectionHeadersResponse {
   success: boolean;
