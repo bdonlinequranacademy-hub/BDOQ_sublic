@@ -19,22 +19,18 @@ import { FormWizardShell } from "@/components/forms/wizard/FormWizardShell";
 import { FormAlert } from "@/components/forms/shared/FormAlert";
 import { FormSuccessScreen } from "@/components/forms/shared/FormSuccessScreen";
 import { FormPageLayout } from "@/components/forms/shared/FormPageLayout";
-import { StudentStepAddress } from "@/components/forms/student-admission/StudentStepAddress";
 import { StudentStepGuardian } from "@/components/forms/student-admission/StudentStepGuardian";
 import { StudentStepLearning } from "@/components/forms/student-admission/StudentStepLearning";
 import { StudentStepPersonal } from "@/components/forms/student-admission/StudentStepPersonal";
 import { StudentStepAdmissionFee } from "@/components/forms/student-admission/StudentStepAdmissionFee";
-import { StudentStepMonthlyTuition } from "@/components/forms/student-admission/StudentStepMonthlyTuition";
 import { StudentStepReview } from "@/components/forms/student-admission/StudentStepReview";
 import { ADMISSION_FEE } from "@/lib/constants";
 
 const STEP_COMPONENTS = [
   StudentStepPersonal,
-  StudentStepAddress,
   StudentStepLearning,
   StudentStepGuardian,
   StudentStepAdmissionFee,
-  StudentStepMonthlyTuition,
   StudentStepReview,
 ] as const;
 
@@ -62,30 +58,11 @@ export function StudentAdmissionWizard() {
   const methods = useForm<StudentAdmissionFormValues>({
     resolver: zodResolver(schemas.full),
     defaultValues: {
-      nationality: "Bangladeshi",
-      currentCountry: "Bangladesh",
-      currentState: "",
-      currentDistrict: "",
-      currentCity: "",
-      currentPostalCode: "",
-      permanentCountry: "Bangladesh",
-      permanentState: "",
-      permanentDistrict: "",
-      permanentCity: "",
-      permanentPostalCode: "",
-      sameAsCurrentAddress: false,
-      topicsOfInterest: [],
-      devices: [],
-      referralSources: [],
+      country: "Bangladesh",
       preferredPeriod: "PM",
       timezone: DEFAULT_TIMEZONE,
       admissionFeeCurrency: "bdt",
       admissionFeeAmount: String(ADMISSION_FEE.bdt),
-      payCurrentMonthTuition: false,
-      monthlyTuitionAmount: "",
-      monthlyTuitionPaymentMethod: "",
-      monthlyTuitionReference: "",
-      monthlyTuitionDate: "",
       termsAccepted: false,
     },
     mode: "onTouched",
@@ -93,7 +70,6 @@ export function StudentAdmissionWizard() {
 
   const { handleSubmit, getValues, setError, clearErrors, reset, watch } =
     methods;
-  const monthlyChoice = watch("monthlyTuitionChoice");
 
   useEffect(() => {
     if (!prefillParam) return;
@@ -111,21 +87,7 @@ export function StudentAdmissionWizard() {
       reset({
         ...getValues(),
         ...prefill,
-        topicsOfInterest: Array.isArray(prefill.topicsOfInterest)
-          ? prefill.topicsOfInterest
-          : [],
-        devices: Array.isArray(prefill.devices) ? prefill.devices : [],
-        referralSources: Array.isArray(prefill.referralSources)
-          ? prefill.referralSources
-          : [],
         termsAccepted: false,
-        payCurrentMonthTuition: Boolean(prefill.payCurrentMonthTuition),
-        monthlyTuitionChoice:
-          prefill.monthlyTuitionChoice === "yes" || prefill.payCurrentMonthTuition
-            ? "yes"
-            : prefill.monthlyTuitionChoice === "no"
-              ? "no"
-              : undefined,
       });
       setPrefillToken(result.prefillToken);
       setPrefillLoaded(true);
@@ -217,13 +179,9 @@ export function StudentAdmissionWizard() {
           data.admissionPaymentProofFile
         );
       }
-      if (data.monthlyTuitionChoice === "yes" && data.monthlyTuitionProofFile) {
-        formData.append("monthlyTuitionProof", data.monthlyTuitionProofFile);
-      }
 
       const omitKeys = new Set([
         "admissionPaymentProofFile",
-        "monthlyTuitionProofFile",
         "confirmPassword",
       ]);
       const rest = Object.fromEntries(
@@ -234,7 +192,6 @@ export function StudentAdmissionWizard() {
         "data",
         JSON.stringify({
           ...rest,
-          payCurrentMonthTuition: data.monthlyTuitionChoice === "yes",
           locale,
           ...(prefillToken ? { prefillToken } : {}),
         })
@@ -315,11 +272,6 @@ export function StudentAdmissionWizard() {
           onBack={handleBack}
           onNext={handleWizardNext}
           isSubmitting={submitState === "loading"}
-          nextLabel={
-            currentStep === 5 && monthlyChoice === "no"
-              ? t("skipMonthly")
-              : undefined
-          }
           submitLabel={t("submit")}
         >
           <StepComponent />

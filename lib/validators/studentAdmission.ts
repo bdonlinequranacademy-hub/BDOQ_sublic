@@ -65,12 +65,9 @@ function applyPasswordMatch(
 export function createStudentAdmissionSchemas(v: FormValidationFn) {
   const step1Base = z.object({
     fullName: z.string().min(2, v("fullNameRequired")),
-    dateOfBirth: z.string().min(1, v("dobRequired")),
-    nationality: z.string().min(2, v("nationalityRequired")),
-    gender: z.enum(["male", "female"], { message: v("genderRequired") }),
     email: z.string().email(v("emailRequired")),
     whatsapp: z.string().min(10, v("whatsappRequired")),
-    guardianWhatsapp: z.string().optional(),
+    country: z.string().min(2, v("countryRequired")),
     password: z.string().min(6, v("passwordMin")),
     confirmPassword: z.string().min(1, v("confirmPasswordRequired")),
   });
@@ -79,35 +76,17 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     applyPasswordMatch(data, ctx, v)
   );
 
-  const step2 = z.object(addressFields(v));
-
-  const step3 = z.object({
-    quranReadingLevel: quranLevelEnum,
-    teachingLanguage: teachingLanguageEnum,
-    topicsOfInterest: z.array(topicEnum).min(1, v("topicRequired")),
-    classType: classTypeEnum,
+  const step2 = z.object({
+    packagePlan: z.string().min(1, v("packageRequired")),
     timezone: z.string().min(1, v("timezoneRequired")),
     preferredHour: z.string().min(1, v("hourRequired")),
     preferredMinute: z.string().min(1, v("minuteRequired")),
     preferredPeriod: z.enum(["AM", "PM"], { message: v("periodRequired") }),
-    devices: z.array(deviceEnum).min(1, v("deviceRequired")),
-    internetType: internetTypeEnum,
-    packagePlan: z.string().min(1, v("packageRequired")),
-    paymentMethod: z.string().min(1, v("paymentRequired")),
   });
 
-  const step4 = z.object({
+  const step3 = z.object({
     parentName: z.string().min(2, v("parentNameRequired")),
-    parentRelationship: z.string().min(2, v("relationshipRequired")),
     parentWhatsapp: z.string().min(10, v("parentWhatsappRequired")),
-    parentEmail: z
-      .string()
-      .optional()
-      .refine((val) => !val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-        message: v("emailInvalid"),
-      }),
-    referralSources: z.array(referralEnum).min(1, v("referralRequired")),
-    goals: z.string().min(10, v("goalsRequired")),
   });
 
   const proofSchema = z
@@ -115,7 +94,7 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     .refine((file) => file.size <= 5 * 1024 * 1024, v("imageSize5mb"))
     .refine((file) => file.type.startsWith("image/"), v("imageType"));
 
-  const step5Base = z.object({
+  const step4Base = z.object({
     admissionFeeCurrency: z.enum(["bdt", "usd"], {
       message: v("admissionCurrencyRequired"),
     }),
@@ -132,7 +111,7 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
 
   const applyAdmissionFeeRefinement = (
     data: Pick<
-      z.infer<typeof step5Base>,
+      z.infer<typeof step4Base>,
       "admissionFeeAmount" | "admissionFeeCurrency"
     >,
     ctx: z.RefinementCtx
@@ -158,71 +137,13 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     }
   };
 
-  const step5 = step5Base.superRefine(applyAdmissionFeeRefinement);
+  const step4 = step4Base.superRefine(applyAdmissionFeeRefinement);
 
-  const step6Base = z.object({
-    monthlyTuitionChoice: z.enum(["yes", "no"], {
-      message: v("monthlyChoiceRequired"),
-    }),
-    payCurrentMonthTuition: z.boolean(),
-    monthlyTuitionAmount: z.string().optional(),
-    monthlyTuitionPaymentMethod: z.string().optional(),
-    monthlyTuitionReference: z.string().optional(),
-    monthlyTuitionDate: z.string().optional(),
-    monthlyTuitionProofFile: proofSchema.optional().nullable(),
-  });
-
-  const applyMonthlyTuitionRefinement = (
-    data: z.infer<typeof step6Base>,
-    ctx: z.RefinementCtx
-  ): void => {
-    if (data.monthlyTuitionChoice !== "yes") return;
-
-    const monthly = Number(data.monthlyTuitionAmount);
-    if (!Number.isFinite(monthly) || monthly <= 0) {
-      ctx.addIssue({
-        code: "custom",
-        message: v("monthlyTuitionInvalid"),
-        path: ["monthlyTuitionAmount"],
-      });
-    }
-    if (!data.monthlyTuitionPaymentMethod?.trim()) {
-      ctx.addIssue({
-        code: "custom",
-        message: v("admissionPaymentRequired"),
-        path: ["monthlyTuitionPaymentMethod"],
-      });
-    }
-    if (!data.monthlyTuitionReference?.trim()) {
-      ctx.addIssue({
-        code: "custom",
-        message: v("admissionReferenceRequired"),
-        path: ["monthlyTuitionReference"],
-      });
-    }
-    if (!data.monthlyTuitionDate?.trim()) {
-      ctx.addIssue({
-        code: "custom",
-        message: v("admissionDateRequired"),
-        path: ["monthlyTuitionDate"],
-      });
-    }
-    if (!(data.monthlyTuitionProofFile instanceof File)) {
-      ctx.addIssue({
-        code: "custom",
-        message: v("imageRequired"),
-        path: ["monthlyTuitionProofFile"],
-      });
-    }
-  };
-
-  const step6 = step6Base.superRefine(applyMonthlyTuitionRefinement);
-
-  const step7Base = z.object({
+  const step5Base = z.object({
     termsAccepted: z.boolean(),
   });
 
-  const step7 = step7Base.refine((data) => data.termsAccepted === true, {
+  const step5 = step5Base.refine((data) => data.termsAccepted === true, {
     message: v("termsRequired"),
     path: ["termsAccepted"],
   });
@@ -230,13 +151,10 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
   const full = step1Base
     .merge(step2)
     .merge(step3)
-    .merge(step4)
+    .merge(step4Base)
     .merge(step5Base)
-    .merge(step6Base)
-    .merge(step7Base)
     .superRefine((data, ctx) => {
       applyAdmissionFeeRefinement(data, ctx);
-      applyMonthlyTuitionRefinement(data, ctx);
       applyPasswordMatch(data, ctx, v);
 
       if (!data.termsAccepted) {
@@ -254,10 +172,8 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     step3,
     step4,
     step5,
-    step6,
-    step7,
     full,
-    steps: [step1, step2, step3, step4, step5, step6, step7] as const,
+    steps: [step1, step2, step3, step4, step5] as const,
   };
 }
 
@@ -272,32 +188,11 @@ export const STUDENT_ADMISSION_STEPS = [
     titleEn: "Personal Information",
     fields: [
       "fullName",
-      "dateOfBirth",
-      "nationality",
-      "gender",
       "email",
       "whatsapp",
+      "country",
       "password",
       "confirmPassword",
-    ],
-  },
-  {
-    id: "address",
-    titleBn: "ঠিকানা",
-    titleEn: "Current & Permanent Address",
-    fields: [
-      "currentCountry",
-      "currentState",
-      "currentDistrict",
-      "currentCity",
-      "currentPostalCode",
-      "currentAddressLine1",
-      "permanentCountry",
-      "permanentState",
-      "permanentDistrict",
-      "permanentCity",
-      "permanentPostalCode",
-      "permanentAddressLine1",
     ],
   },
   {
@@ -305,31 +200,18 @@ export const STUDENT_ADMISSION_STEPS = [
     titleBn: "কোর্স ও শেখার পছন্দ",
     titleEn: "Course & Learning Preferences",
     fields: [
-      "quranReadingLevel",
-      "teachingLanguage",
-      "topicsOfInterest",
-      "classType",
+      "packagePlan",
       "timezone",
       "preferredHour",
       "preferredMinute",
       "preferredPeriod",
-      "devices",
-      "internetType",
-      "packagePlan",
-      "paymentMethod",
     ],
   },
   {
     id: "guardian",
-    titleBn: "অভিভাবক ও অন্যান্য তথ্য",
-    titleEn: "Guardian & Additional Information",
-    fields: [
-      "parentName",
-      "parentRelationship",
-      "parentWhatsapp",
-      "referralSources",
-      "goals",
-    ],
+    titleBn: "অভিভাবক",
+    titleEn: "Guardian Information",
+    fields: ["parentName", "parentWhatsapp"],
   },
   {
     id: "admissionFee",
@@ -342,16 +224,6 @@ export const STUDENT_ADMISSION_STEPS = [
       "admissionPaymentReference",
       "admissionPaymentDate",
       "admissionPaymentProofFile",
-    ],
-  },
-  {
-    id: "monthlyTuition",
-    titleBn: "চলতি মাসের টিউশন",
-    titleEn: "This Month’s Tuition",
-    fields: [
-      "monthlyTuitionChoice",
-      "monthlyTuitionAmount",
-      "monthlyTuitionProofFile",
     ],
   },
   {

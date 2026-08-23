@@ -3,25 +3,14 @@
 import { useTranslations } from "next-intl";
 import { Controller, useFormContext } from "react-hook-form";
 import { BilingualLabel } from "@/components/forms/shared/BilingualLabel";
-import { MultiSelectChips } from "@/components/forms/shared/MultiSelectChips";
-import { FormSelect } from "@/components/forms/shared/FormSelect";
 import {
   formErrorClass,
   formInputClass,
 } from "@/components/forms/shared/formStyles";
+import { usePackageSelectOptions } from "@/lib/i18n/useFormSelectOptions";
 import {
-  usePackageSelectOptions,
-  usePaymentSelectOptions,
-} from "@/lib/i18n/useFormSelectOptions";
-import {
-  CLASS_TYPE_OPTIONS,
-  DEVICE_MULTI_OPTIONS,
-  INTERNET_CONNECTION_TYPES,
   HOUR_OPTIONS,
   MINUTE_OPTIONS,
-  QURAN_READING_LEVELS,
-  TEACHING_LANGUAGE_OPTIONS,
-  TOPIC_INTEREST_OPTIONS,
   DEFAULT_TIMEZONE,
 } from "@/lib/formOptions";
 import { TimezonePicker } from "@/components/forms/shared/TimezonePicker";
@@ -31,7 +20,6 @@ export function StudentStepLearning() {
   const t = useTranslations("forms.studentAdmission");
   const tCommon = useTranslations("forms.common");
   const packageOptions = usePackageSelectOptions();
-  const paymentOptions = usePaymentSelectOptions();
   const {
     register,
     control,
@@ -40,89 +28,6 @@ export function StudentStepLearning() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <BilingualLabel
-          labelBn="আপনি কতটুকু কুরআন পড়তে পারেন?"
-          labelEn="How much of the Quran can you currently read?"
-          required
-        />
-        <Controller
-          name="quranReadingLevel"
-          control={control}
-          render={({ field }) => (
-            <FormSelect
-              id="quranReadingLevel"
-              value={field.value ?? ""}
-              onChange={field.onChange}
-              error={errors.quranReadingLevel?.message}
-              options={QURAN_READING_LEVELS}
-            />
-          )}
-        />
-      </div>
-
-      <div>
-        <BilingualLabel
-          labelBn="কোন ভাষায় পড়তে চান?"
-          labelEn="In which language would you like to learn from BDOQ?"
-          required
-        />
-        <Controller
-          name="teachingLanguage"
-          control={control}
-          render={({ field }) => (
-            <FormSelect
-              id="teachingLanguage"
-              value={field.value ?? ""}
-              onChange={field.onChange}
-              error={errors.teachingLanguage?.message}
-              options={TEACHING_LANGUAGE_OPTIONS}
-            />
-          )}
-        />
-      </div>
-
-      <div>
-        <BilingualLabel
-          labelBn="কোন বিষয় শিখতে চান?"
-          labelEn="What topics would you like to learn?"
-          required
-        />
-        <Controller
-          name="topicsOfInterest"
-          control={control}
-          render={({ field }) => (
-            <MultiSelectChips
-              value={field.value ?? []}
-              onChange={field.onChange}
-              error={errors.topicsOfInterest?.message}
-              options={TOPIC_INTEREST_OPTIONS}
-            />
-          )}
-        />
-      </div>
-
-      <div>
-        <BilingualLabel
-          labelBn="কিভাবে ক্লাস নিতে চান?"
-          labelEn="How would you like to start?"
-          required
-        />
-        <Controller
-          name="classType"
-          control={control}
-          render={({ field }) => (
-            <FormSelect
-              id="classType"
-              value={field.value ?? ""}
-              onChange={field.onChange}
-              error={errors.classType?.message}
-              options={CLASS_TYPE_OPTIONS}
-            />
-          )}
-        />
-      </div>
-
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <BilingualLabel
@@ -183,92 +88,26 @@ export function StudentStepLearning() {
 
       <div>
         <BilingualLabel
-          labelBn="আপনার কোন ডিভাইস আছে?"
-          labelEn="Which device(s) do you have?"
+          htmlFor="packagePlan"
+          labelBn="প্যাকেজ"
+          labelEn="Select package"
           required
         />
-        <Controller
-          name="devices"
-          control={control}
-          render={({ field }) => (
-            <MultiSelectChips
-              value={field.value ?? []}
-              onChange={field.onChange}
-              error={errors.devices?.message}
-              options={DEVICE_MULTI_OPTIONS}
-            />
-          )}
-        />
-      </div>
-
-      <div>
-        <BilingualLabel
-          labelBn="ইন্টারনেট সংযোগ"
-          labelEn="Internet connection"
-          required
-        />
-        <Controller
-          name="internetType"
-          control={control}
-          render={({ field }) => (
-            <FormSelect
-              id="internetType"
-              value={field.value ?? ""}
-              onChange={field.onChange}
-              error={errors.internetType?.message}
-              options={INTERNET_CONNECTION_TYPES}
-            />
-          )}
-        />
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <BilingualLabel
-            htmlFor="packagePlan"
-            labelBn="প্যাকেজ"
-            labelEn="Select package"
-            required
-          />
-          <select
-            id="packagePlan"
-            className={formInputClass}
-            {...register("packagePlan")}
-          >
-            <option value="">{t("placeholders.package")}</option>
-            {packageOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {errors.packagePlan && (
-            <p className={formErrorClass}>{errors.packagePlan.message}</p>
-          )}
-        </div>
-        <div>
-          <BilingualLabel
-            htmlFor="paymentMethod"
-            labelBn="মাসিক পেমেন্ট পদ্ধতি"
-            labelEn="Monthly tuition payment method"
-            required
-          />
-          <select
-            id="paymentMethod"
-            className={formInputClass}
-            {...register("paymentMethod")}
-          >
-            <option value="">{t("placeholders.payment")}</option>
-            {paymentOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {errors.paymentMethod && (
-            <p className={formErrorClass}>{errors.paymentMethod.message}</p>
-          )}
-        </div>
+        <select
+          id="packagePlan"
+          className={formInputClass}
+          {...register("packagePlan")}
+        >
+          <option value="">{t("placeholders.package")}</option>
+          {packageOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {errors.packagePlan && (
+          <p className={formErrorClass}>{errors.packagePlan.message}</p>
+        )}
       </div>
     </div>
   );
