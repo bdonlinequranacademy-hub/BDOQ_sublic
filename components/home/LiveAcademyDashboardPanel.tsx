@@ -51,7 +51,7 @@ function SessionRow({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
-      className="flex items-start gap-3 border-b border-gray-100 py-3 last:border-b-0"
+      className="mb-3 flex items-start gap-3 rounded-xl border border-gray-100 bg-[#FAFCFB] p-3 last:mb-0"
     >
       <span
         className={cn(
@@ -103,18 +103,20 @@ function TeacherRow({ teacher, index = 0 }: { teacher: ILiveDashboardTeacher; in
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
-      className="flex items-center gap-3 border-b border-gray-100 py-3 last:border-b-0"
+      className="mb-3 flex items-center gap-3 rounded-xl border border-gray-100 bg-[#FAFCFB] p-3 last:mb-0"
     >
-      <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-gray-100">
-        <Image
-          src={avatar}
-          alt={teacher.shortName}
-          fill
-          className="object-cover"
-          sizes="36px"
-        />
+      <div className="relative h-9 w-9 shrink-0">
+        <div className="relative h-full w-full overflow-hidden rounded-full bg-gray-100">
+          <Image
+            src={avatar}
+            alt={teacher.shortName}
+            fill
+            className="object-cover"
+            sizes="36px"
+          />
+        </div>
         {teacher.isLive ? (
-          <span className="absolute bottom-0 right-0 flex h-2.5 w-2.5">
+          <span className="absolute bottom-0 right-0 z-10 flex h-2.5 w-2.5 translate-x-1/4 translate-y-1/4">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#32C991] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 border-[1.5px] border-white bg-[#32C991]"></span>
           </span>
@@ -234,7 +236,7 @@ export function LiveAcademyDashboardPanel() {
         </div>
       </div>
 
-      <div className="min-h-[240px] flex-1 px-5 py-2">
+      <div className="min-h-[240px] flex-1 px-5 py-4">
         <AnimatePresence mode="wait">
           {slide === "queue" ? (
             <motion.div
