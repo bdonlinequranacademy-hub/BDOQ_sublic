@@ -21,6 +21,9 @@ export interface ILiveDashboard {
   teachersOnline: ILiveDashboardTeacher[];
   activeTeacherCount: number;
   activeTeacherDisplay: string;
+  totalLiveCount: number;
+  totalQueuedCount: number;
+  totalOnlineTeachersCount: number;
   updatedAt: string;
 }
 
@@ -29,7 +32,7 @@ interface IApiLiveDashboardResponse {
   data: ILiveDashboard;
 }
 
-const CACHE_MS = 45_000;
+const CACHE_MS = 10_000;
 
 let cachedDashboard: ILiveDashboard | null = null;
 let cachedAt = 0;

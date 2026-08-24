@@ -12,6 +12,6 @@ export function useLiveDashboardQuery() {
   return useQuery<ILiveDashboard | null>({
     queryKey: LIVE_DASHBOARD_KEY,
     queryFn: fetchLiveDashboard,
-    refetchInterval: 60_000,
+    refetchInterval: 15_000,
   });
 }

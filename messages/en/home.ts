@@ -329,7 +329,7 @@ export const homeMessages = {
     syncLabel: "Portal sync",
     feedLabel: "Session feed",
     systemReady: "System ready",
-    autoRefresh: "Auto-refresh 60s",
+    autoRefresh: "Auto-refresh 15s",
     channelLive: "Live channel",
     channelQueue: "Waiting queue",
     channelStaff: "Staff online",

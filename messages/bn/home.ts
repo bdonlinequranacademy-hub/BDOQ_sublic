@@ -328,7 +328,7 @@ export const homeMessages = {
     syncLabel: "পোর্টাল সিঙ্ক",
     feedLabel: "সেশন ফিড",
     systemReady: "সিস্টেম প্রস্তুত",
-    autoRefresh: "অটো-রিফ্রেশ ৬০সে.",
+    autoRefresh: "অটো-রিফ্রেশ ১৫সে.",
     channelLive: "লাইভ চ্যানেল",
     channelQueue: "অপেক্ষমাণ কিউ",
     channelStaff: "স্টাফ অনলাইন",

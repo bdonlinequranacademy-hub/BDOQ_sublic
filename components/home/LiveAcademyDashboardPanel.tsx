@@ -38,14 +38,21 @@ function syncLabel(
 function SessionRow({
   session,
   t,
+  index = 0,
 }: {
   session: ILiveDashboardSession;
   t: ReturnType<typeof useTranslations>;
+  index?: number;
 }) {
   const isLive = session.status === "live";
 
   return (
-    <article className="flex items-start gap-3 border-b border-gray-100 py-3 last:border-b-0">
+    <motion.article
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
+      className="flex items-start gap-3 border-b border-gray-100 py-3 last:border-b-0"
+    >
       <span
         className={cn(
           "mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
@@ -53,7 +60,10 @@ function SessionRow({
         )}
       >
         {isLive ? (
-          <Circle className="h-2.5 w-2.5 fill-current animate-pulse" />
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#269B6F] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#269B6F]"></span>
+          </span>
         ) : (
           <Clock3 className="h-4 w-4" aria-hidden="true" />
         )}
@@ -79,17 +89,22 @@ function SessionRow({
       <span className="shrink-0 font-inter text-[11px] font-medium text-gray-400">
         {session.timeLabel}
       </span>
-    </article>
+    </motion.article>
   );
 }
 
-function TeacherRow({ teacher }: { teacher: ILiveDashboardTeacher }) {
+function TeacherRow({ teacher, index = 0 }: { teacher: ILiveDashboardTeacher; index?: number }) {
   const avatar =
     teacher.avatarUrl?.trim() ||
     defaultTeacherAvatarUrl(teacher.gender, 96);
 
   return (
-    <article className="flex items-center gap-3 border-b border-gray-100 py-3 last:border-b-0">
+    <motion.article
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
+      className="flex items-center gap-3 border-b border-gray-100 py-3 last:border-b-0"
+    >
       <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-gray-100">
         <Image
           src={avatar}
@@ -99,7 +114,10 @@ function TeacherRow({ teacher }: { teacher: ILiveDashboardTeacher }) {
           sizes="36px"
         />
         {teacher.isLive ? (
-          <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full border border-white bg-[#32C991]" />
+          <span className="absolute bottom-0 right-0 flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#32C991] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 border-[1.5px] border-white bg-[#32C991]"></span>
+          </span>
         ) : null}
       </div>
       <div className="min-w-0 flex-1">
@@ -115,7 +133,7 @@ function TeacherRow({ teacher }: { teacher: ILiveDashboardTeacher }) {
           Live
         </span>
       ) : null}
-    </article>
+    </motion.article>
   );
 }
 
@@ -162,15 +180,9 @@ export function LiveAcademyDashboardPanel() {
     return () => window.clearInterval(id);
   }, [dashboard?.updatedAt, t]);
 
-  const liveCount = useMemo(
-    () => dashboard?.sessions.filter((s) => s.status === "live").length ?? 0,
-    [dashboard?.sessions]
-  );
-  const queueCount = useMemo(
-    () => dashboard?.sessions.filter((s) => s.status === "queued").length ?? 0,
-    [dashboard?.sessions]
-  );
-  const onlineCount = dashboard?.teachersOnline.length ?? 0;
+  const liveCount = dashboard?.totalLiveCount ?? 0;
+  const queueCount = dashboard?.totalQueuedCount ?? 0;
+  const onlineCount = dashboard?.totalOnlineTeachersCount ?? 0;
   const activeDisplay = dashboard?.activeTeacherDisplay ?? "—";
 
   return (
@@ -238,6 +250,7 @@ export function LiveAcademyDashboardPanel() {
                     key={`${session.teacherLabel}-${i}`}
                     session={session}
                     t={t}
+                    index={i}
                   />
                 ))
               ) : (
@@ -262,20 +275,10 @@ export function LiveAcademyDashboardPanel() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="mb-2 flex items-center justify-between rounded-xl border border-gray-100 bg-[#FAFCFB] px-3 py-2.5">
-                <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-[#32C991]" aria-hidden="true" />
-                  <p className="font-inter text-xs font-medium text-gray-600">
-                    {t("activeTeachers")}
-                  </p>
-                </div>
-                <p className="font-inter text-sm font-bold tabular-nums text-[#269B6F]">
-                  {activeDisplay}
-                </p>
-              </div>
+
               {dashboard?.teachersOnline.length ? (
-                dashboard.teachersOnline.map((teacher) => (
-                  <TeacherRow key={teacher.id} teacher={teacher} />
+                dashboard.teachersOnline.map((teacher, i) => (
+                  <TeacherRow key={teacher.id} teacher={teacher} index={i} />
                 ))
               ) : (
                 <div className="flex min-h-[160px] flex-col items-center justify-center px-4 text-center">
