@@ -101,7 +101,6 @@ function isTodayOrFuture(dateStr: string): boolean {
 
 export function createFreeClassSchemas(v: FormValidationFn) {
   const step1 = z.object({
-    parentName: z.string().min(2, v("parentNameRequired")),
     studentName: z.string().min(2, v("studentNameRequired")),
     whatsapp: z.string().min(10, v("whatsappRequired")),
     gender: z.enum(["male", "female"], { message: v("genderRequired") }),

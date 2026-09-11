@@ -29,23 +29,7 @@ export function FreeStepPersonal() {
         {t("infoBanner")}
       </p>
 
-      <div>
-        <BilingualLabel
-          htmlFor="parentName"
-          labelBn="অভিভাবকের নাম"
-          labelEn="Parent / Guardian Name"
-          required
-        />
-        <input
-          id="parentName"
-          className={formInputClass}
-          placeholder={t("placeholders.parentName")}
-          {...register("parentName")}
-        />
-        {errors.parentName && (
-          <p className={formErrorClass}>{errors.parentName.message}</p>
-        )}
-      </div>
+
 
       <div>
         <BilingualLabel
