@@ -18,7 +18,6 @@ export function ageToLearnerType(age: string): "child" | "teen" | "adult" {
 }
 
 export interface ITrialBookingApiPayload {
-  parentName: string;
   studentName: string;
   whatsapp: string;
   country: string;
@@ -40,7 +39,6 @@ export function mapFreeClassToTrialBooking(
   const country = data.country.trim() || DEFAULT_COUNTRY;
 
   return {
-    parentName: data.parentName.trim(),
     studentName: data.studentName.trim(),
     whatsapp: data.whatsapp.trim(),
     country,

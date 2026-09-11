@@ -52,7 +52,6 @@ export function FreeStepBooking() {
 
   const reviewItems = useMemo(
     () => [
-      { label: t("review.parentName"), value: values.parentName ?? "" },
       { label: t("review.studentName"), value: values.studentName ?? "" },
       { label: t("review.whatsapp"), value: values.whatsapp ?? "" },
       { label: t("review.age"), value: values.age ?? "" },

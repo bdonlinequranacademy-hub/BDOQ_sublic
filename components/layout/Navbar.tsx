@@ -20,7 +20,21 @@ import { NavLink } from "@/components/layout/NavLink";
 import { NavMoreMenu } from "@/components/layout/NavMoreMenu";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { SiteSearchTrigger } from "@/components/search/SiteSearchTrigger";
+import { useSiteSettings } from "@/lib/hooks/useSiteSettings";
 import { cn } from "@/lib/cn";
+
+function filterNavItems(items: INavItem[], isOpen: boolean): INavItem[] {
+  if (isOpen) return items;
+  return items.map((item) => {
+    if (item.children) {
+      return {
+        ...item,
+        children: item.children.filter((child) => child.href !== "/teacher-registration"),
+      };
+    }
+    return item;
+  });
+}
 
 function renderNavItem(item: INavItem, label: (key: string) => string) {
   if (item.children) {
@@ -40,6 +54,12 @@ export function Navbar() {
   const label = useNavLabel();
   const tA11y = useTranslations("a11y");
   const tNav = useTranslations("nav");
+  const { data: siteSettings } = useSiteSettings();
+
+  const isTeacherAppOpen = siteSettings?.isTeacherApplicationOpen ?? true;
+  
+  const filteredMainNav = filterNavItems(MAIN_NAV, isTeacherAppOpen);
+  const filteredNavOverflow = filterNavItems(MAIN_NAV_OVERFLOW, isTeacherAppOpen);
 
   const closeMobile = (): void => {
     setIsMobileOpen(false);
@@ -83,7 +103,7 @@ export function Navbar() {
               aria-label={tA11y("mainNav")}
             >
               {MAIN_NAV_PRIMARY.map((item) => renderNavItem(item, label))}
-              <NavMoreMenu items={MAIN_NAV_OVERFLOW} />
+              <NavMoreMenu items={filteredNavOverflow} />
             </nav>
 
             <div className="hidden shrink-0 items-center justify-end gap-2 lg:flex xl:gap-2.5">
@@ -142,7 +162,7 @@ export function Navbar() {
         </div>
       </header>
 
-      <MobileNav items={MAIN_NAV} isOpen={isMobileOpen} onClose={closeMobile} />
+      <MobileNav items={filteredMainNav} isOpen={isMobileOpen} onClose={closeMobile} />
     </>
   );
 }

@@ -55,7 +55,6 @@ export function FreeClassWizard({
   const methods = useForm<FreeClassFormValues>({
     resolver: zodResolver(schemas.full),
     defaultValues: {
-      parentName: "",
       studentName: "",
       country: DEFAULT_COUNTRY,
       subject: defaultSubject || subjects[0]?.value || "",
