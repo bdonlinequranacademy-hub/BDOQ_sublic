@@ -5,9 +5,12 @@ export function useSiteSettings() {
   return useQuery({
     queryKey: ["site-settings"],
     queryFn: () =>
-      apiFetch<{ data: { isTeacherApplicationOpen: boolean } }>("/site-settings").then(
+      apiFetch<{ data: { isTeacherApplicationOpen: boolean } }>("/site-settings", {
+        cache: "no-store"
+      }).then(
         (res) => res.data
       ),
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 0,
+    refetchOnWindowFocus: true,
   });
 }

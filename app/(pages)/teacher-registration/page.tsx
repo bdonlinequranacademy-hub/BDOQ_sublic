@@ -32,7 +32,9 @@ export const metadata: Metadata = {
 
 export default async function TeacherRegistrationPage() {
   try {
-    const res = await apiFetch<{ data: { isTeacherApplicationOpen: boolean } }>("/site-settings", { next: { revalidate: 60 } });
+    const res = await apiFetch<{ data: { isTeacherApplicationOpen: boolean } }>("/site-settings", {
+      cache: "no-store",
+    });
     if (!res.data?.isTeacherApplicationOpen) {
       redirect("/");
     }
@@ -51,7 +53,10 @@ export default async function TeacherRegistrationPage() {
     <>
       <RegistrationPageHero pageKey="teacherRegistration" />
 
-      <section className="bg-[#F7FBF8] py-10 md:py-14">
+      <section
+        id="teacher-registration-form"
+        className="bg-[#F7FBF8] py-10 md:py-14"
+      >
         <div className="site-container">
           <ClientMessagesProvider messages={clientMessages}>
             <TeacherRegistrationWizard />
