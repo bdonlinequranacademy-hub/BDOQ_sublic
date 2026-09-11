@@ -5,7 +5,7 @@ export function useSiteSettings() {
   return useQuery({
     queryKey: ["site-settings"],
     queryFn: () =>
-      apiFetch<{ data: { isTeacherApplicationOpen: boolean } }>("/site-settings", {
+      apiFetch<{ data: { isTeacherApplicationOpen: boolean } }>("/public/site-settings", {
         cache: "no-store"
       }).then(
         (res) => res.data

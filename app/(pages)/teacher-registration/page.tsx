@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 export default async function TeacherRegistrationPage() {
   try {
-    const res = await apiFetch<{ data: { isTeacherApplicationOpen: boolean } }>("/site-settings", {
+    const res = await apiFetch<{ data: { isTeacherApplicationOpen: boolean } }>("/public/site-settings", {
       cache: "no-store",
     });
     if (!res.data?.isTeacherApplicationOpen) {
