@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getMessages } from "next-intl/server";
+import { redirect } from "next/navigation";
 import { SITE_URL } from "@/lib/constants";
+import { apiFetch } from "@/lib/api";
 import { ClientMessagesProvider } from "@/components/i18n/ClientMessagesProvider";
 import { getFormClientMessages } from "@/lib/i18n/clientShellMessages";
 import { RegistrationPageHero } from "@/components/forms/shared/RegistrationPageHero";
@@ -29,6 +31,16 @@ export const metadata: Metadata = {
 };
 
 export default async function TeacherRegistrationPage() {
+  try {
+    const res = await apiFetch<{ data: { isTeacherApplicationOpen: boolean } }>("/site-settings", { next: { revalidate: 60 } });
+    if (!res.data?.isTeacherApplicationOpen) {
+      redirect("/");
+    }
+  } catch (error) {
+    // If API fails, default to closed and redirect
+    redirect("/");
+  }
+
   const messages = await getMessages();
   const clientMessages = getFormClientMessages(
     messages as Record<string, unknown>,

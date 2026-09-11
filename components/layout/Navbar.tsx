@@ -56,7 +56,7 @@ export function Navbar() {
   const tNav = useTranslations("nav");
   const { data: siteSettings } = useSiteSettings();
 
-  const isTeacherAppOpen = siteSettings?.isTeacherApplicationOpen ?? true;
+  const isTeacherAppOpen = siteSettings?.isTeacherApplicationOpen ?? false;
   
   const filteredMainNav = filterNavItems(MAIN_NAV, isTeacherAppOpen);
   const filteredNavOverflow = filterNavItems(MAIN_NAV_OVERFLOW, isTeacherAppOpen);
