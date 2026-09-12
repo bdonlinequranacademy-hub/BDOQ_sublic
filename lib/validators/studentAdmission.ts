@@ -82,6 +82,7 @@ export function createStudentAdmissionSchemas(v: FormValidationFn) {
     preferredHour: z.string().min(1, v("hourRequired")),
     preferredMinute: z.string().min(1, v("minuteRequired")),
     preferredPeriod: z.enum(["AM", "PM"], { message: v("periodRequired") }),
+    preferredClassDays: z.array(z.string()).optional(),
   });
 
   const step3 = z.object({
@@ -205,6 +206,7 @@ export const STUDENT_ADMISSION_STEPS = [
       "preferredHour",
       "preferredMinute",
       "preferredPeriod",
+      "preferredClassDays",
     ],
   },
   {

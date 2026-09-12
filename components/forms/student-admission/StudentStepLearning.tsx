@@ -15,6 +15,17 @@ import {
 } from "@/lib/formOptions";
 import { TimezonePicker } from "@/components/forms/shared/TimezonePicker";
 import type { StudentAdmissionFormValues } from "@/lib/validators/studentAdmission";
+import { cn } from "@/lib/cn";
+
+const CLASS_DAYS = [
+  "Saturday",
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+] as const;
 
 export function StudentStepLearning() {
   const t = useTranslations("forms.studentAdmission");
@@ -84,6 +95,47 @@ export function StudentStepLearning() {
             </p>
           )}
         </div>
+      </div>
+
+      <div>
+        <BilingualLabel
+          labelBn="পছন্দের ক্লাস দিন (একাধিক দিন সিলেক্ট করতে পারেন)"
+          labelEn="Preferred class days (you can select multiple)"
+        />
+        <Controller
+          name="preferredClassDays"
+          control={control}
+          render={({ field }) => {
+            const currentDays = field.value || [];
+            return (
+              <div className="mt-2 flex flex-wrap gap-2">
+                {CLASS_DAYS.map((day) => {
+                  const active = currentDays.includes(day);
+                  return (
+                    <button
+                      key={day}
+                      type="button"
+                      onClick={() => {
+                        const newDays = active
+                          ? currentDays.filter((d) => d !== day)
+                          : [...currentDays, day];
+                        field.onChange(newDays);
+                      }}
+                      className={cn(
+                        "rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
+                        active
+                          ? "border-primary bg-primary/10 text-primary-dark"
+                          : "border-gray-200 bg-white text-text-gray hover:border-primary/40"
+                      )}
+                    >
+                      {day}
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          }}
+        />
       </div>
 
       <div>
