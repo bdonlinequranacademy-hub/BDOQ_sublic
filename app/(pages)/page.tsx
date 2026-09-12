@@ -149,14 +149,14 @@ export default async function HomePage() {
   return (
     <NextIntlClientProvider locale={locale} messages={homeMessages}>
       <HomeHeroGroup cmsSlides={cmsHeroSlides} />
+      <LiveAcademySection
+        header={pickSectionHeader(sectionHeaders, "home.liveAcademy")}
+      />
       <QuickNavSection />
       <AboutSection />
       <TopicsSection />
       <LearningPlansSection />
       <HowToStartSection />
-      <LiveAcademySection
-        header={pickSectionHeader(sectionHeaders, "home.liveAcademy")}
-      />
       <WhyChooseUsSection
         header={pickSectionHeader(sectionHeaders, "home.whyChoose")}
       />
