@@ -3,7 +3,7 @@ import { PACKAGES } from "./constants";
 import type { IPackage } from "./types";
 
 const PRICING_REVALIDATE = 0;
-const MIN_HEALTHY_PACKAGES = 2;
+const MIN_HEALTHY_PACKAGES = 1;
 
 interface IApiPackage {
   slug?: string;

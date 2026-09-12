@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import { getMessages } from "next-intl/server";
 import { SITE_URL } from "@/lib/constants";

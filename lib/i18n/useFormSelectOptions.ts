@@ -7,6 +7,8 @@ import {
   PACKAGE_OPTIONS,
   PAYMENT_OPTIONS,
 } from "@/lib/formOptions";
+import { apiFetch } from "@/lib/api";
+import { useState, useEffect } from "react";
 
 type PackageKey = "basic" | "standard" | "advance" | "premium";
 type PaymentKey = "bkash" | "nagad" | "bank" | "cash";
@@ -29,19 +31,51 @@ export function useNationalitySelectOptions(): {
 }
 
 export function usePackageSelectOptions(): {
-  value: PackageKey;
+  value: string;
   label: string;
 }[] {
   const t = useTranslations("forms.options.package");
+  const [dynamicOptions, setDynamicOptions] = useState<
+    { value: string; label: string }[] | null
+  >(null);
 
-  return useMemo(
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await apiFetch<{ data?: { packages?: any[] } }>(
+          "/public/pricing"
+        );
+        const pkgs = res.data?.packages || [];
+        const valid = pkgs.filter((p) => p.name && p.price?.bdt > 0);
+        if (valid.length > 0) {
+          setDynamicOptions(
+            valid.map((p) => ({
+              value: p.slug || p.name.toLowerCase().replace(/\s+/g, "-"),
+              label: `${p.name} — ৳${p.price.bdt}/${p.period || "Monthly"}`,
+            }))
+          );
+        } else {
+          setDynamicOptions([]);
+        }
+      } catch {
+        setDynamicOptions([]);
+      }
+    }
+    load();
+  }, []);
+
+  const defaultOptions = useMemo(
     () =>
       PACKAGE_OPTIONS.map((option) => ({
-        value: option.value as PackageKey,
-        label: t(option.value as PackageKey),
+        value: option.value,
+        label: t(option.value as PackageKey) || option.label,
       })),
     [t]
   );
+
+  return dynamicOptions && dynamicOptions.length > 0
+    ? dynamicOptions
+    : defaultOptions;
 }
 
 export function usePaymentSelectOptions(): {
