@@ -239,7 +239,7 @@ export const HOME_TRUST_STATS = [
   },
   {
     id: "students",
-    value: 200,
+    value: 300,
     suffix: "+",
     labelKey: "satisfiedStudents",
     icon: "users" as const,

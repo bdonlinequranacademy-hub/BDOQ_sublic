@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { HeroQuoteBanner } from "@/components/home/HeroQuoteBanner";
 import { PremiumHeroCarousel } from "@/components/home/PremiumHeroCarousel";
 import { SiteCta } from "@/components/shared/SiteCta";
 import { IslamicShapeBackdrop } from "@/components/shared/IslamicShapeBackdrop";
@@ -186,8 +185,6 @@ export function PremiumHeroSection({
           </ul>
         </div>
       </div>
-
-      <HeroQuoteBanner />
     </section>
   );
 }
