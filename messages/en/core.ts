@@ -13,7 +13,7 @@ export const coreMessages = {
     announcement: "Academy announcement",
   },
   topbar: {
-    announcement: "Trusted by 300+ students across 10 countries",
+    announcement: "Trusted by 300+ students across 20+ countries",
   },
   nav: {
     home: "Home",
@@ -76,7 +76,7 @@ export const coreMessages = {
     courses: "Courses",
     resources: "Resources",
     contactUs: "Contact Us",
-    officeHours: "Sun–Thu · 9:00 AM – 9:00 PM (BST)",
+    officeHours: "24/7 (Open 24 Hours)",
     popularCourses: "Some Popular Courses",
     otherLinks: "Other Links",
     whatsapp: "WhatsApp:",

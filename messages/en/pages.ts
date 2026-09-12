@@ -18,7 +18,7 @@ export const pagesMessages = {
     email: "Email",
     phone: "Phone",
     officeHours: "Office Hours",
-    officeHoursValue: "Sun – Thu: 9:00 AM – 9:00 PM (BDT)",
+    officeHoursValue: "24/7 (Open 24 Hours)",
     formTitle: "Send us a message",
     formHint: "Fill in the form and we will get back to you soon.",
     name: "Your Name",

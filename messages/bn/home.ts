@@ -9,7 +9,7 @@ export const homeMessages = {
   premiumHero: {
     aria: "বিডি অনলাইন কুরআন একাডেমি হোম পরিচিতি",
     featuresAria: "মূল বৈশিষ্ট্য",
-    badge: "১০টি দেশে ৩০০+ শিক্ষার্থীর বিশ্বস্ত পছন্দ",
+    badge: "২০+ দেশে ৩০০+ শিক্ষার্থীর বিশ্বস্ত পছন্দ",
     titleBefore: "কয়েকটি সহজ ধাপে আপনার কুরআন",
     titleHighlight: "যাত্রা",
     titleAfter: "শুরু করুন।",
@@ -92,7 +92,7 @@ export const homeMessages = {
           secondaryCta: "লার্নিং পাথ দেখুন",
         },
         "slide-4": {
-          badge: "১০টি দেশে ৩০০+ শিক্ষার্থীর বিশ্বস্ত পছন্দ",
+          badge: "২০+ দেশে ৩০০+ শিক্ষার্থীর বিশ্বস্ত পছন্দ",
           title: "কয়েকটি সহজ ধাপে আপনার কুরআন যাত্রা শুরু করুন।",
           titleHighlight: "যাত্রা",
           subtitle:
@@ -220,7 +220,7 @@ export const homeMessages = {
     popularBadge: "সবচেয়ে জনপ্রিয়",
     cta: "আজই শুরু করুন",
     explorePlan: "প্ল্যান দেখুন",
-    trustBadge: "১০টি দেশে ৩০০+ শিক্ষার্থীর বিশ্বস্ত পছন্দ",
+    trustBadge: "২০+ দেশে ৩০০+ শিক্ষার্থীর বিশ্বস্ত পছন্দ",
     plans: {
       record: {
         title: "রেকর্ড কোর্স",

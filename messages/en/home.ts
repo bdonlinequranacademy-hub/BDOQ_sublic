@@ -9,7 +9,7 @@ export const homeMessages = {
   premiumHero: {
     aria: "BD Online Quran Academy home introduction",
     featuresAria: "Key features",
-    badge: "Trusted by 300+ students across 10 countries",
+    badge: "Trusted by 300+ students across 20+ countries",
     titleBefore: "Start Your Quran",
     titleHighlight: "Journey",
     titleAfter: "in a Few Simple Steps.",
@@ -94,7 +94,7 @@ export const homeMessages = {
           secondaryCta: "View Learning Path",
         },
         "slide-4": {
-          badge: "Trusted by 300+ students across 10 countries",
+          badge: "Trusted by 300+ students across 20+ countries",
           title: "Start Your Quran Journey in a Few Simple Steps.",
           titleHighlight: "Journey",
           subtitle:
@@ -215,7 +215,7 @@ export const homeMessages = {
     popularBadge: "Most popular",
     cta: "Get started today",
     explorePlan: "Explore plan",
-    trustBadge: "Trusted by 300+ Students Across 10 Countries",
+    trustBadge: "Trusted by 300+ Students Across 20+ countries",
     plans: {
       record: {
         title: "Record Course",

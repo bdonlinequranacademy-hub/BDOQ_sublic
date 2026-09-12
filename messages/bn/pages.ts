@@ -5,7 +5,7 @@ export const pagesMessages = {
     subtitle:
       "কোর্স সাপোর্ট, ভর্তি সহায়তা বা পার্টনারশিপের জন্য যোগাযোগ করুন — আমাদের টিম প্রস্তুত।",
     cardCallTitle: "যেকোনো সময় কল করুন",
-    cardCallNote: "রবি – বৃহ: সকাল ৯টা – রাত ৯টা (BDT)",
+    cardCallNote: "২৪/৭ (সবসময় খোলা)",
     cardEmailTitle: "ইমেইল করুন",
     cardEmailNote: "২৪ ঘণ্টার মধ্যে উত্তর দিই",
     cardWhatsappTitle: "WhatsApp-এ চ্যাট",
