@@ -43,13 +43,7 @@ export function ContactInfo() {
             href={`tel:${ACADEMY_INFO.contactBD.replace(/\s/g, "")}`}
             className="block text-primary hover:text-primary-dark"
           >
-            BD: {ACADEMY_INFO.contactBD}
-          </a>
-          <a
-            href={`tel:${ACADEMY_INFO.contactEG.replace(/\s/g, "")}`}
-            className="block text-primary hover:text-primary-dark"
-          >
-            EG: {ACADEMY_INFO.contactEG}
+            {ACADEMY_INFO.contactBD}
           </a>
         </div>
       ),

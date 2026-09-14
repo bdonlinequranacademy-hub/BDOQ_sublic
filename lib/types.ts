@@ -233,7 +233,6 @@ export interface IAcademyInfo {
   mission: string;
   founded: string;
   contactBD: string;
-  contactEG: string;
   email: string;
   whatsapp: string;
   address: string;

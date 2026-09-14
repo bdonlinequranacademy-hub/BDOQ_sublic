@@ -52,10 +52,9 @@ export const ACADEMY_INFO: IAcademyInfo = {
   mission:
     "BD Online Quran Academy (BDOQ Academy) is an international standard online Quran education platform offering one-to-one live classes, Tajweed, Hifz, and Noorani Qaida courses with experienced Hafiz and scholars. We serve students across Bangladesh and worldwide with flexible schedules, separate classes for men and women, and multilingual instruction in Bengali, English, Arabic, and Urdu.",
   founded: "7+ years experience",
-  contactBD: "+8801923947460",
-  contactEG: "+20122681709",
+  contactBD: "+8801923947490",
   email: "bdonlinequranacademy@gmail.com",
-  whatsapp: "+8801923947460",
+  whatsapp: "+8801923947490",
   address: "Gopalganj, Dhaka, Bangladesh",
   website: "bdonlinequranacademy.com",
 };
@@ -688,7 +687,7 @@ export const SOCIAL_LINKS: ISocialLink[] = [
   },
   {
     name: "WhatsApp",
-    url: "https://wa.me/8801923947460",
+    url: "https://wa.me/8801923947490",
     icon: "whatsapp",
   },
   {
@@ -720,8 +719,8 @@ export type AdmissionFeeCurrency = keyof typeof ADMISSION_FEE;
 
 /** Wallet / account details for manual admission fee payment instructions. */
 export const ADMISSION_PAYMENT_ACCOUNTS = {
-  bkash: { label: "bKash (Send Money)", number: "01923497460" },
-  nagad: { label: "Nagad", number: "01923497460" },
+  bkash: { label: "bKash (Send Money)", number: "01923947490" },
+  nagad: { label: "Nagad", number: "01923947490" },
   bank: {
     label: "Bank transfer",
     accountName: "BD Online Quran Academy",
@@ -733,8 +732,8 @@ export const ADMISSION_PAYMENT_ACCOUNTS = {
   },
 } as const;
 
-export const WHATSAPP_PHONE = "+8801923947460";
-export const WHATSAPP_URL = "https://wa.me/8801923947460";
+export const WHATSAPP_PHONE = "+8801923947490";
+export const WHATSAPP_URL = "https://wa.me/8801923947490";
 
 export const PRAYER_TIMES_API =
   "https://api.aladhan.com/v1/timingsByCity?city=Dhaka&country=Bangladesh";

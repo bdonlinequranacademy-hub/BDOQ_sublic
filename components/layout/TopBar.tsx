@@ -53,16 +53,6 @@ export function TopBar() {
               <span aria-hidden="true">🇧🇩</span>
               <span>{ACADEMY_INFO.contactBD}</span>
             </a>
-            <span className="text-white/35" aria-hidden="true">
-              ·
-            </span>
-            <a
-              href={`tel:${ACADEMY_INFO.contactEG.replace(/\s/g, "")}`}
-              className="inline-flex items-center gap-1 whitespace-nowrap transition-colors hover:text-white"
-            >
-              <span aria-hidden="true">🇪🇬</span>
-              <span>{ACADEMY_INFO.contactEG}</span>
-            </a>
           </div>
 
           <span className="h-3.5 w-px bg-white/25" aria-hidden="true" />

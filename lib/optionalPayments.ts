@@ -38,9 +38,9 @@ export type OptionalPaymentCurrencyType =
   (typeof OPTIONAL_PAYMENT_CURRENCIES)[number];
 
 export const OPTIONAL_PAYMENT_ACCOUNTS = {
-  bkash: { label: "bKash (Send Money)", number: "01923497460" },
-  nagad: { label: "Nagad", number: "01923497460" },
-  rocket: { label: "Rocket", number: "01923497460" },
+  bkash: { label: "bKash (Send Money)", number: "01923947490" },
+  nagad: { label: "Nagad", number: "01923947490" },
+  rocket: { label: "Rocket", number: "01923947490" },
   bank: {
     label: "Bank transfer",
     accountName: "BD Online Quran Academy",

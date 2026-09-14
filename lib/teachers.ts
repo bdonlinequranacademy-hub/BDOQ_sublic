@@ -175,9 +175,9 @@ export function getTeacherContactEmail(): string {
 }
 
 export function getTeacherContactPhone(): string {
-  return "+8801923947460";
+  return "+8801923947490";
 }
 
 export function getTeacherWhatsAppUrl(): string {
-  return "https://wa.me/8801923947460";
+  return "https://wa.me/8801923947490";
 }
