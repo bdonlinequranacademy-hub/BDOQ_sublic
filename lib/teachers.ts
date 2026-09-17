@@ -174,10 +174,10 @@ export function getTeacherContactEmail(): string {
   return "bdonlinequranacademy@gmail.com";
 }
 
-export function getTeacherContactPhone(): string {
-  return "+8801923947490";
+export function getTeacherWhatsAppPhone(): string {
+  return "+8801923947460";
 }
 
 export function getTeacherWhatsAppUrl(): string {
-  return "https://wa.me/8801923947490";
+  return "https://wa.me/8801923947460";
 }
