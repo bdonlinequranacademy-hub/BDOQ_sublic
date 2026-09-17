@@ -174,7 +174,7 @@ export function getTeacherContactEmail(): string {
   return "bdonlinequranacademy@gmail.com";
 }
 
-export function getTeacherWhatsAppPhone(): string {
+export function getTeacherContactPhone(): string {
   return "+8801923947460";
 }
 
